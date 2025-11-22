@@ -334,23 +334,27 @@ app.get('/website/check', async (req, res) => {
 
 // Helper function to get latest statuses for all websites
 function getLatestStatuses() {
-  const statusFile = path.join(__dirname, 'logs/website_status.json');
+  // Use the same path resolution as database.js
+  const { getStatusFilePath } = require('./src/utils/database');
+  const statusFile = getStatusFilePath();
   let statuses = [];
 
   if (fs.existsSync(statusFile)) {
     try {
       const data = fs.readFileSync(statusFile, 'utf8');
       statuses = JSON.parse(data);
-      logger.debug(`Loaded ${statuses.length} status entries from file`);
+      logger.debug(`Loaded ${statuses.length} status entries from file: ${statusFile}`);
       // Ensure statuses is an array
       if (!Array.isArray(statuses)) {
         logger.warn('Status file is not an array, resetting to empty array');
         statuses = [];
       }
     } catch (error) {
-      logger.error(`Error reading status file: ${error.message}`, error);
+      logger.error(`Error reading status file ${statusFile}: ${error.message}`, error);
       statuses = [];
     }
+  } else {
+    logger.debug(`Status file not found at: ${statusFile}. No status data available.`);
   }
 
   const websites = loadWebsites();
@@ -373,6 +377,7 @@ function getLatestStatuses() {
     }
   });
 
+  logger.debug(`Processed ${Object.keys(latestStatuses).length} unique website statuses from ${statuses.length} total entries`);
   return { websites, latestStatuses };
 }
 
@@ -444,7 +449,7 @@ app.get('/api/website-statuses', (req, res) => {
         url: website.url,
         status: websiteStatus,
         statusCode: status.status,
-        error: status.error,
+        error: status.error || null,
         checked_at: status.checked_at || null
       };
 
@@ -452,7 +457,9 @@ app.get('/api/website-statuses', (req, res) => {
       return result;
     });
 
-    logger.debug(`[API] Returning ${websiteStatuses.length} website statuses`);
+    logger.info(`[API /website-statuses] Returning ${websiteStatuses.length} website statuses. Statuses found: ${Object.keys(latestStatuses).length}`);
+    logger.debug(`[API /website-statuses] Sample response:`, websiteStatuses.slice(0, 2));
+
     res.json({ success: true, websiteStatuses });
   } catch (error) {
     logger.error(`Error fetching website statuses: ${error.message}`, error);

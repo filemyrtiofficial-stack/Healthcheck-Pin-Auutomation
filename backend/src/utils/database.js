@@ -1,14 +1,52 @@
 const path = require('path');
 const fs = require('fs');
 
+// Get the correct logs directory path (works in both dev and production)
+function getLogsDir() {
+  // Try multiple possible locations (check for status file existence, not just directory)
+  const possibleDirs = [
+    path.join(__dirname, '../../logs'), // backend/src/utils -> backend/logs
+    path.join(__dirname, '../../../logs'), // If running from different location
+    path.join(process.cwd(), 'logs'), // Root logs directory
+    path.join(process.cwd(), 'backend/logs') // Backend logs from root
+  ];
+
+  // First, check if status file exists in any of these directories
+  for (const dir of possibleDirs) {
+    const statusFile = path.join(dir, 'website_status.json');
+    if (fs.existsSync(statusFile)) {
+      return dir;
+    }
+  }
+
+  // If status file doesn't exist, check if any of the directories exist
+  for (const dir of possibleDirs) {
+    if (fs.existsSync(dir)) {
+      return dir;
+    }
+  }
+
+  // If none exist, create the first one (most common case)
+  const defaultDir = path.join(__dirname, '../../logs');
+  if (!fs.existsSync(defaultDir)) {
+    fs.mkdirSync(defaultDir, { recursive: true });
+  }
+  return defaultDir;
+}
+
 // Ensure logs directory exists
-const logsDir = path.join(__dirname, '../../logs');
+const logsDir = getLogsDir();
 if (!fs.existsSync(logsDir)) {
   fs.mkdirSync(logsDir, { recursive: true });
 }
 
 const statusFile = path.join(logsDir, 'website_status.json');
 const postsFile = path.join(logsDir, 'post_logs.json');
+
+// Export the status file path so server.js can use it
+function getStatusFilePath() {
+  return statusFile;
+}
 
 // Initialize JSON files if they don't exist
 function ensureFiles() {
@@ -101,5 +139,6 @@ function savePostLog(url, message, status, error = null) {
 module.exports = {
   saveStatus,
   getLastPostTime,
-  savePostLog
+  savePostLog,
+  getStatusFilePath
 };
