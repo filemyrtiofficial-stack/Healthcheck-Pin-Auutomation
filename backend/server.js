@@ -30,13 +30,24 @@ setupCORS(app);
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Request logging middleware (only in development)
-if (process.env.NODE_ENV !== 'production') {
-  app.use((req, res, next) => {
+// Middleware to ensure API routes return JSON, not HTML
+app.use((req, res, next) => {
+  // Force JSON content type for all API routes
+  if (req.path.startsWith('/api/') || req.path.startsWith('/website/') || req.path.startsWith('/health')) {
+    res.setHeader('Content-Type', 'application/json');
+  }
+  next();
+});
+
+// Request logging middleware - log ALL requests to API routes
+app.use((req, res, next) => {
+  if (req.path.startsWith('/api/') || req.path.startsWith('/website/') || req.path.startsWith('/health')) {
+    logger.info(`[REQUEST] ${req.method} ${req.path} - Headers: ${JSON.stringify(req.headers)}`);
+  } else {
     logger.debug(`${req.method} ${req.path}`);
-    next();
-  });
-}
+  }
+  next();
+});
 
 // Note: Static file serving is moved to the end, after all API routes
 
@@ -85,6 +96,7 @@ function saveWebsites(websites) {
 
 // Health check endpoint
 app.get('/health', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
   res.json({
     success: true,
     status: 'healthy',
@@ -92,6 +104,12 @@ app.get('/health', (req, res) => {
     uptime: process.uptime(),
     environment: process.env.NODE_ENV || 'development'
   });
+});
+
+// Test endpoint to verify API routing works
+app.get('/api/test', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.json({ success: true, message: 'API routing is working!', path: req.path });
 });
 
 // Required endpoints matching specification
@@ -445,8 +463,15 @@ app.get('/api/debug/status-file', (req, res) => {
 
 // Get all website statuses (latest status for each website)
 app.get('/api/website-statuses', (req, res) => {
+  // Explicitly set JSON content type
+  res.setHeader('Content-Type', 'application/json');
+
   try {
     logger.info('[API /website-statuses] ========== REQUEST RECEIVED ==========');
+    logger.info('[API /website-statuses] Request path:', req.path);
+    logger.info('[API /website-statuses] Request method:', req.method);
+    logger.info('[API /website-statuses] Request headers:', req.headers);
+
     const { websites, latestStatuses } = getLatestStatuses();
 
     logger.info(`[API /website-statuses] Websites to process: ${websites.length}`);
@@ -546,10 +571,13 @@ app.get('/api/website-statuses', (req, res) => {
       } : null
     });
 
-    res.json(response);
+    // Explicitly ensure JSON response
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json(response);
   } catch (error) {
     logger.error(`[API /website-statuses] ERROR: ${error.message}`, error);
     logger.error(`[API /website-statuses] Stack:`, error.stack);
+    res.setHeader('Content-Type', 'application/json');
     res.status(500).json({ success: false, error: 'Internal server error' });
   }
 });
@@ -813,22 +841,35 @@ app.get('/api/down-websites', (req, res) => {
 const frontendDist = path.join(__dirname, '../frontend/dist');
 const frontendSrc = path.join(__dirname, '../frontend');
 
-// Middleware to serve static files only for non-API routes
+// IMPORTANT: Do NOT use app.use(express.static()) here as it will catch API routes
+// Instead, we'll only serve static files for specific file extensions
+// This middleware must come AFTER all API routes
 app.use((req, res, next) => {
-  // Skip API routes and website routes - let them be handled by their specific routes
-  if (req.path.startsWith('/api/') || req.path.startsWith('/website/') || req.path.startsWith('/health')) {
+  // CRITICAL: Skip ALL API routes - never serve static files for these
+  const path = req.path.toLowerCase();
+  if (path.startsWith('/api/') || path.startsWith('/website/') || path.startsWith('/health')) {
+    logger.debug(`[Static Middleware] Skipping static file serving for API route: ${req.path}`);
     return next();
   }
 
-  // For static assets (JS, CSS, images, etc.)
-  if (req.path.match(/\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$/)) {
+  // Only serve actual static asset files (with extensions)
+  // Don't serve anything else - let the catch-all route handle it
+  if (path.match(/\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot|map)$/)) {
+    logger.debug(`[Static Middleware] Serving static file: ${req.path}`);
     if (fs.existsSync(frontendDist)) {
-      return express.static(frontendDist)(req, res, next);
+      return express.static(frontendDist, {
+        setHeaders: (res, path) => {
+          // Ensure correct content types
+          if (path.endsWith('.js')) res.setHeader('Content-Type', 'application/javascript');
+          if (path.endsWith('.css')) res.setHeader('Content-Type', 'text/css');
+        }
+      })(req, res, next);
     } else {
       return express.static(frontendSrc)(req, res, next);
     }
   }
 
+  // For all other paths, continue to next middleware (catch-all route)
   next();
 });
 
