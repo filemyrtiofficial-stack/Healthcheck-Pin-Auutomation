@@ -1,0 +1,50 @@
+I want you to extend the existing automation project by adding a WhatsApp notification system.
+
+Important Requirements:
+1. NO WhatsApp API, NO Twilio, NO paid services.
+2. Notifications must be sent using WhatsApp Web through browser automation.
+3. Use Puppeteer or Playwright to:
+    - Open https://web.whatsapp.com
+    - Scan QR code manually once
+    - After login, the session must stay saved
+    - Search for a specific contact or group (read from .env)
+    - Automatically paste a message and send it
+
+4. When any RTI website is detected as DOWN:
+      - Create a short alert message using local template system, for example:
+        "⚠️ ALERT: Website DOWN\nURL: {{url}}\nChecked: {{time}}\nStatus: {{error}}"
+      - Send this message to WhatsApp Web using automation.
+
+5. Add a new module:
+      src/whatsapp/
+        - whatsappSender.js (or whatsapp.py)
+        - helpers to open browser, load session, search chat, and send message.
+
+6. Update the main workflow:
+      checker → if DOWN → generatePost → social posting → sendWhatsAppAlert → log
+
+7. Add environment variables in .env:
+      WHATSAPP_CONTACT_NAME="YourContactOrGroupName"
+      WHATSAPP_SESSION_PATH="./whatsapp-session"
+
+8. WhatsApp Automation Requirements:
+      - Use persistent session so you don’t need QR code every time.
+      - Implement waitForSelector for chat search input.
+      - Select chat automatically.
+      - Send message by typing and pressing Enter.
+      - Include full error handling (if WhatsApp not loaded, retry, etc.).
+
+9. Add README instructions:
+      - How to scan QR code once
+      - How session is stored
+      - How to set WhatsApp contact/group name
+      - How to restart WhatsApp automation if session expires
+
+10. Your output must:
+      - Create full code for whatsappSender module
+      - Integrate into the project flow
+      - Update cron workflow if needed
+      - Add required dependencies
+      - Ensure everything remains 100% free
+
+Build the entire WhatsApp notification feature now.

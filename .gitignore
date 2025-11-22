@@ -1,0 +1,37 @@
+node_modules/
+.env
+.env.local
+.env.*.local
+logs/*.json
+logs/*.log
+logs/screenshots/*.png
+whatsapp-session/
+.DS_Store
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+frontend/dist/
+frontend/build/
+*.map
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Production
+*.pem
+*.key
+*.crt
+
+
+

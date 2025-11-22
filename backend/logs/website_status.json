@@ -1,0 +1,2620 @@
+[
+  {
+    "id": 1,
+    "url": "https://rti.rajasthan.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T09:29:07.640Z"
+  },
+  {
+    "id": 2,
+    "url": "https://rtionline.sikkim.gov.in/auth/login",
+    "status": 200,
+    "error": "Server Error",
+    "checked_at": "2025-11-21T09:29:07.642Z"
+  },
+  {
+    "id": 3,
+    "url": "https://rtionline.tripura.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:29:07.643Z"
+  },
+  {
+    "id": 4,
+    "url": "https://rtionline.up.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:29:07.644Z"
+  },
+  {
+    "id": 5,
+    "url": "https://rtionline.uk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:29:07.646Z"
+  },
+  {
+    "id": 6,
+    "url": "https://par.wb.gov.in/rtilogin.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:29:07.647Z"
+  },
+  {
+    "id": 7,
+    "url": "https://chandigarh.gov.in/submit-rti-application",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:29:07.648Z"
+  },
+  {
+    "id": 8,
+    "url": "https://rtionline.delhi.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:29:07.649Z"
+  },
+  {
+    "id": 9,
+    "url": "https://rtionline.jk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:29:07.651Z"
+  },
+  {
+    "id": 10,
+    "url": "https://rtionline.ladakh.gov.in/index.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:29:07.652Z"
+  },
+  {
+    "id": 11,
+    "url": "https://aalpha.com/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T09:29:07.653Z"
+  },
+  {
+    "id": 12,
+    "url": "https://rti.rajasthan.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T09:32:32.669Z"
+  },
+  {
+    "id": 13,
+    "url": "https://rtionline.sikkim.gov.in/auth/login",
+    "status": 200,
+    "error": "Server Error",
+    "checked_at": "2025-11-21T09:32:32.671Z"
+  },
+  {
+    "id": 14,
+    "url": "https://rtionline.tripura.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:32:32.672Z"
+  },
+  {
+    "id": 15,
+    "url": "https://rtionline.up.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:32:32.673Z"
+  },
+  {
+    "id": 16,
+    "url": "https://rtionline.uk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:32:32.675Z"
+  },
+  {
+    "id": 17,
+    "url": "https://par.wb.gov.in/rtilogin.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:32:32.676Z"
+  },
+  {
+    "id": 18,
+    "url": "https://chandigarh.gov.in/submit-rti-application",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:32:32.677Z"
+  },
+  {
+    "id": 19,
+    "url": "https://rtionline.delhi.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:32:32.678Z"
+  },
+  {
+    "id": 20,
+    "url": "https://rtionline.jk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:32:32.680Z"
+  },
+  {
+    "id": 21,
+    "url": "https://rtionline.ladakh.gov.in/index.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:32:32.681Z"
+  },
+  {
+    "id": 22,
+    "url": "https://aalpha.com/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T09:32:32.682Z"
+  },
+  {
+    "id": 23,
+    "url": "https://rti.rajasthan.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T09:34:44.029Z"
+  },
+  {
+    "id": 24,
+    "url": "https://rtionline.sikkim.gov.in/auth/login",
+    "status": 200,
+    "error": "Server Error",
+    "checked_at": "2025-11-21T09:34:44.031Z"
+  },
+  {
+    "id": 25,
+    "url": "https://rtionline.tripura.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:34:44.033Z"
+  },
+  {
+    "id": 26,
+    "url": "https://rtionline.up.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:34:44.034Z"
+  },
+  {
+    "id": 27,
+    "url": "https://rtionline.uk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:34:44.035Z"
+  },
+  {
+    "id": 28,
+    "url": "https://par.wb.gov.in/rtilogin.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:34:44.036Z"
+  },
+  {
+    "id": 29,
+    "url": "https://chandigarh.gov.in/submit-rti-application",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:34:44.038Z"
+  },
+  {
+    "id": 30,
+    "url": "https://rtionline.delhi.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:34:44.039Z"
+  },
+  {
+    "id": 31,
+    "url": "https://rtionline.jk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:34:44.040Z"
+  },
+  {
+    "id": 32,
+    "url": "https://rtionline.ladakh.gov.in/index.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:34:44.042Z"
+  },
+  {
+    "id": 33,
+    "url": "https://aalpha.com/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T09:34:44.043Z"
+  },
+  {
+    "id": 34,
+    "url": "https://abcdgov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T09:34:44.044Z"
+  },
+  {
+    "id": 35,
+    "url": "https://rti.rajasthan.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T09:40:22.521Z"
+  },
+  {
+    "id": 36,
+    "url": "https://rtionline.sikkim.gov.in/auth/login",
+    "status": 200,
+    "error": "Server Error",
+    "checked_at": "2025-11-21T09:40:22.526Z"
+  },
+  {
+    "id": 37,
+    "url": "https://rtionline.tripura.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:40:22.528Z"
+  },
+  {
+    "id": 38,
+    "url": "https://rtionline.up.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:40:22.529Z"
+  },
+  {
+    "id": 39,
+    "url": "https://rtionline.uk.gov.in/",
+    "status": null,
+    "error": "Page Not Loading",
+    "checked_at": "2025-11-21T09:40:22.530Z"
+  },
+  {
+    "id": 40,
+    "url": "https://par.wb.gov.in/rtilogin.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:40:22.534Z"
+  },
+  {
+    "id": 41,
+    "url": "https://chandigarh.gov.in/submit-rti-application",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:40:22.535Z"
+  },
+  {
+    "id": 42,
+    "url": "https://rtionline.delhi.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:40:22.536Z"
+  },
+  {
+    "id": 43,
+    "url": "https://rtionline.jk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:40:22.537Z"
+  },
+  {
+    "id": 44,
+    "url": "https://rtionline.ladakh.gov.in/index.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T09:40:22.541Z"
+  },
+  {
+    "id": 45,
+    "url": "https://aalpha.com/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T09:40:22.542Z"
+  },
+  {
+    "id": 46,
+    "url": "https://abcdgov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T09:40:22.544Z"
+  },
+  {
+    "id": 47,
+    "url": "https://rti.rajasthan.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T10:08:32.863Z"
+  },
+  {
+    "id": 48,
+    "url": "https://rtionline.sikkim.gov.in/auth/login",
+    "status": 200,
+    "error": "Server Error",
+    "checked_at": "2025-11-21T10:08:32.867Z"
+  },
+  {
+    "id": 49,
+    "url": "https://rtionline.tripura.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:08:32.869Z"
+  },
+  {
+    "id": 50,
+    "url": "https://rtionline.up.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:08:32.870Z"
+  },
+  {
+    "id": 51,
+    "url": "https://rtionline.uk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:08:32.872Z"
+  },
+  {
+    "id": 52,
+    "url": "https://par.wb.gov.in/rtilogin.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:08:32.873Z"
+  },
+  {
+    "id": 53,
+    "url": "https://chandigarh.gov.in/submit-rti-application",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:08:32.876Z"
+  },
+  {
+    "id": 54,
+    "url": "https://rtionline.delhi.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:08:32.878Z"
+  },
+  {
+    "id": 55,
+    "url": "https://rtionline.jk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:08:32.881Z"
+  },
+  {
+    "id": 56,
+    "url": "https://rtionline.ladakh.gov.in/index.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:08:32.884Z"
+  },
+  {
+    "id": 57,
+    "url": "https://aalpha.com/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T10:08:32.887Z"
+  },
+  {
+    "id": 58,
+    "url": "https://abcdgov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T10:08:32.888Z"
+  },
+  {
+    "id": 59,
+    "url": "https://rtionline.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:08:32.890Z"
+  },
+  {
+    "id": 60,
+    "url": "https://rti.rajasthan.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T10:09:25.598Z"
+  },
+  {
+    "id": 61,
+    "url": "https://rtionline.sikkim.gov.in/auth/login",
+    "status": 200,
+    "error": "Server Error",
+    "checked_at": "2025-11-21T10:09:25.600Z"
+  },
+  {
+    "id": 62,
+    "url": "https://rtionline.tripura.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:09:25.601Z"
+  },
+  {
+    "id": 63,
+    "url": "https://rtionline.up.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:09:25.602Z"
+  },
+  {
+    "id": 64,
+    "url": "https://rtionline.uk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:09:25.603Z"
+  },
+  {
+    "id": 65,
+    "url": "https://par.wb.gov.in/rtilogin.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:09:25.604Z"
+  },
+  {
+    "id": 66,
+    "url": "https://chandigarh.gov.in/submit-rti-application",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:09:25.606Z"
+  },
+  {
+    "id": 67,
+    "url": "https://rtionline.delhi.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:09:25.608Z"
+  },
+  {
+    "id": 68,
+    "url": "https://rtionline.jk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:09:25.609Z"
+  },
+  {
+    "id": 69,
+    "url": "https://rtionline.ladakh.gov.in/index.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:09:25.610Z"
+  },
+  {
+    "id": 70,
+    "url": "https://aalpha.com/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T10:09:25.611Z"
+  },
+  {
+    "id": 71,
+    "url": "https://abcdgov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T10:09:25.613Z"
+  },
+  {
+    "id": 72,
+    "url": "https://rtionline.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:09:25.614Z"
+  },
+  {
+    "id": 73,
+    "url": "https://rti.rajasthan.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T10:13:55.935Z"
+  },
+  {
+    "id": 74,
+    "url": "https://rtionline.sikkim.gov.in/auth/login",
+    "status": 200,
+    "error": "Server Error",
+    "checked_at": "2025-11-21T10:13:55.937Z"
+  },
+  {
+    "id": 75,
+    "url": "https://rtionline.tripura.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:13:55.938Z"
+  },
+  {
+    "id": 76,
+    "url": "https://rtionline.up.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:13:55.940Z"
+  },
+  {
+    "id": 77,
+    "url": "https://rtionline.uk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:13:55.941Z"
+  },
+  {
+    "id": 78,
+    "url": "https://par.wb.gov.in/rtilogin.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:13:55.942Z"
+  },
+  {
+    "id": 79,
+    "url": "https://chandigarh.gov.in/submit-rti-application",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:13:55.943Z"
+  },
+  {
+    "id": 80,
+    "url": "https://rtionline.delhi.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:13:55.944Z"
+  },
+  {
+    "id": 81,
+    "url": "https://rtionline.jk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:13:55.946Z"
+  },
+  {
+    "id": 82,
+    "url": "https://rtionline.ladakh.gov.in/index.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:13:55.947Z"
+  },
+  {
+    "id": 83,
+    "url": "https://abcdgov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T10:13:55.949Z"
+  },
+  {
+    "id": 84,
+    "url": "https://rtionline.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:13:55.950Z"
+  },
+  {
+    "id": 85,
+    "url": "https://rti.rajasthan.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T10:22:00.922Z"
+  },
+  {
+    "id": 86,
+    "url": "https://rtionline.sikkim.gov.in/auth/login",
+    "status": 200,
+    "error": "Server Error",
+    "checked_at": "2025-11-21T10:22:00.923Z"
+  },
+  {
+    "id": 87,
+    "url": "https://rtionline.tripura.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:22:00.925Z"
+  },
+  {
+    "id": 88,
+    "url": "https://rtionline.up.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:22:00.927Z"
+  },
+  {
+    "id": 89,
+    "url": "https://rtionline.uk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:22:00.928Z"
+  },
+  {
+    "id": 90,
+    "url": "https://par.wb.gov.in/rtilogin.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:22:00.929Z"
+  },
+  {
+    "id": 91,
+    "url": "https://chandigarh.gov.in/submit-rti-application",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:22:00.930Z"
+  },
+  {
+    "id": 92,
+    "url": "https://rtionline.delhi.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:22:00.931Z"
+  },
+  {
+    "id": 93,
+    "url": "https://rtionline.jk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:22:00.932Z"
+  },
+  {
+    "id": 94,
+    "url": "https://rtionline.ladakh.gov.in/index.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:22:00.933Z"
+  },
+  {
+    "id": 95,
+    "url": "https://abcdgov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T10:22:00.934Z"
+  },
+  {
+    "id": 96,
+    "url": "https://rtionline.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:22:00.935Z"
+  },
+  {
+    "id": 97,
+    "url": "https://rti.rajasthan.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T10:46:53.809Z"
+  },
+  {
+    "id": 98,
+    "url": "https://rtionline.sikkim.gov.in/auth/login",
+    "status": 200,
+    "error": "Server Error",
+    "checked_at": "2025-11-21T10:46:53.811Z"
+  },
+  {
+    "id": 99,
+    "url": "https://rtionline.tripura.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:46:53.813Z"
+  },
+  {
+    "id": 100,
+    "url": "https://rtionline.up.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:46:53.814Z"
+  },
+  {
+    "id": 101,
+    "url": "https://rtionline.uk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:46:53.816Z"
+  },
+  {
+    "id": 102,
+    "url": "https://par.wb.gov.in/rtilogin.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:46:53.819Z"
+  },
+  {
+    "id": 103,
+    "url": "https://chandigarh.gov.in/submit-rti-application",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:46:53.820Z"
+  },
+  {
+    "id": 104,
+    "url": "https://rtionline.delhi.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:46:53.822Z"
+  },
+  {
+    "id": 105,
+    "url": "https://rtionline.jk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:46:53.823Z"
+  },
+  {
+    "id": 106,
+    "url": "https://rtionline.ladakh.gov.in/index.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:46:53.824Z"
+  },
+  {
+    "id": 107,
+    "url": "https://abcdgov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T10:46:53.826Z"
+  },
+  {
+    "id": 108,
+    "url": "https://rtionline.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T10:46:53.827Z"
+  },
+  {
+    "id": 109,
+    "url": "https://rti.rajasthan.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T11:03:44.028Z"
+  },
+  {
+    "id": 110,
+    "url": "https://rtionline.sikkim.gov.in/auth/login",
+    "status": 200,
+    "error": "Server Error",
+    "checked_at": "2025-11-21T11:03:44.030Z"
+  },
+  {
+    "id": 111,
+    "url": "https://rtionline.tripura.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:03:44.033Z"
+  },
+  {
+    "id": 112,
+    "url": "https://rtionline.up.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:03:44.035Z"
+  },
+  {
+    "id": 113,
+    "url": "https://rtionline.uk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:03:44.036Z"
+  },
+  {
+    "id": 114,
+    "url": "https://par.wb.gov.in/rtilogin.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:03:44.038Z"
+  },
+  {
+    "id": 115,
+    "url": "https://chandigarh.gov.in/submit-rti-application",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:03:44.039Z"
+  },
+  {
+    "id": 116,
+    "url": "https://rtionline.delhi.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:03:44.041Z"
+  },
+  {
+    "id": 117,
+    "url": "https://rtionline.jk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:03:44.042Z"
+  },
+  {
+    "id": 118,
+    "url": "https://rtionline.ladakh.gov.in/index.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:03:44.044Z"
+  },
+  {
+    "id": 119,
+    "url": "https://abcdgov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T11:03:44.046Z"
+  },
+  {
+    "id": 120,
+    "url": "https://rtionline.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:03:44.047Z"
+  },
+  {
+    "id": 121,
+    "url": "https://rti.rajasthan.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:14:31.997Z"
+  },
+  {
+    "id": 122,
+    "url": "https://rtionline.sikkim.gov.in/auth/login",
+    "status": 200,
+    "error": "Server Error",
+    "checked_at": "2025-11-21T11:14:31.999Z"
+  },
+  {
+    "id": 123,
+    "url": "https://rtionline.tripura.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:14:32.001Z"
+  },
+  {
+    "id": 124,
+    "url": "https://rtionline.up.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:14:32.003Z"
+  },
+  {
+    "id": 125,
+    "url": "https://rtionline.uk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:14:32.005Z"
+  },
+  {
+    "id": 126,
+    "url": "https://par.wb.gov.in/rtilogin.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:14:32.007Z"
+  },
+  {
+    "id": 127,
+    "url": "https://chandigarh.gov.in/submit-rti-application",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:14:32.009Z"
+  },
+  {
+    "id": 128,
+    "url": "https://rtionline.delhi.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:14:32.010Z"
+  },
+  {
+    "id": 129,
+    "url": "https://rtionline.jk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:14:32.012Z"
+  },
+  {
+    "id": 130,
+    "url": "https://rtionline.ladakh.gov.in/index.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:14:32.014Z"
+  },
+  {
+    "id": 131,
+    "url": "https://abcdgov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T11:14:32.016Z"
+  },
+  {
+    "id": 132,
+    "url": "https://rtionline.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:14:32.017Z"
+  },
+  {
+    "id": 133,
+    "url": "https://rti.rajasthan.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T11:34:14.108Z"
+  },
+  {
+    "id": 134,
+    "url": "https://rtionline.sikkim.gov.in/auth/login",
+    "status": 200,
+    "error": "Server Error",
+    "checked_at": "2025-11-21T11:34:14.111Z"
+  },
+  {
+    "id": 135,
+    "url": "https://rtionline.tripura.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:34:14.113Z"
+  },
+  {
+    "id": 136,
+    "url": "https://rtionline.up.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:34:14.114Z"
+  },
+  {
+    "id": 137,
+    "url": "https://rtionline.uk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:34:14.116Z"
+  },
+  {
+    "id": 138,
+    "url": "https://par.wb.gov.in/rtilogin.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:34:14.118Z"
+  },
+  {
+    "id": 139,
+    "url": "https://chandigarh.gov.in/submit-rti-application",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:34:14.119Z"
+  },
+  {
+    "id": 140,
+    "url": "https://rtionline.delhi.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:34:14.122Z"
+  },
+  {
+    "id": 141,
+    "url": "https://rtionline.jk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:34:14.124Z"
+  },
+  {
+    "id": 142,
+    "url": "https://rtionline.ladakh.gov.in/index.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:34:14.126Z"
+  },
+  {
+    "id": 143,
+    "url": "https://abcdgov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T11:34:14.128Z"
+  },
+  {
+    "id": 144,
+    "url": "https://rtionline.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:34:14.129Z"
+  },
+  {
+    "id": 145,
+    "url": "https://rti.rajasthan.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T11:37:38.460Z"
+  },
+  {
+    "id": 146,
+    "url": "https://rtionline.sikkim.gov.in/auth/login",
+    "status": 200,
+    "error": "Server Error",
+    "checked_at": "2025-11-21T11:37:38.463Z"
+  },
+  {
+    "id": 147,
+    "url": "https://rtionline.tripura.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:37:38.465Z"
+  },
+  {
+    "id": 148,
+    "url": "https://rtionline.up.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:37:38.468Z"
+  },
+  {
+    "id": 149,
+    "url": "https://rtionline.uk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:37:38.471Z"
+  },
+  {
+    "id": 150,
+    "url": "https://par.wb.gov.in/rtilogin.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:37:38.473Z"
+  },
+  {
+    "id": 151,
+    "url": "https://chandigarh.gov.in/submit-rti-application",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:37:38.475Z"
+  },
+  {
+    "id": 152,
+    "url": "https://rtionline.delhi.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:37:38.476Z"
+  },
+  {
+    "id": 153,
+    "url": "https://rtionline.jk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:37:38.478Z"
+  },
+  {
+    "id": 154,
+    "url": "https://rtionline.ladakh.gov.in/index.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:37:38.480Z"
+  },
+  {
+    "id": 155,
+    "url": "https://abcdgov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T11:37:38.482Z"
+  },
+  {
+    "id": 156,
+    "url": "https://rtionline.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:37:38.484Z"
+  },
+  {
+    "id": 157,
+    "url": "https://rti.rajasthan.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T11:44:36.971Z"
+  },
+  {
+    "id": 158,
+    "url": "https://rtionline.sikkim.gov.in/auth/login",
+    "status": 200,
+    "error": "Server Error",
+    "checked_at": "2025-11-21T11:44:36.977Z"
+  },
+  {
+    "id": 159,
+    "url": "https://rtionline.tripura.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:44:36.979Z"
+  },
+  {
+    "id": 160,
+    "url": "https://rtionline.up.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:44:36.981Z"
+  },
+  {
+    "id": 161,
+    "url": "https://rtionline.uk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:44:36.982Z"
+  },
+  {
+    "id": 162,
+    "url": "https://par.wb.gov.in/rtilogin.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:44:36.984Z"
+  },
+  {
+    "id": 163,
+    "url": "https://chandigarh.gov.in/submit-rti-application",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:44:36.986Z"
+  },
+  {
+    "id": 164,
+    "url": "https://rtionline.delhi.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:44:36.988Z"
+  },
+  {
+    "id": 165,
+    "url": "https://rtionline.jk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:44:36.989Z"
+  },
+  {
+    "id": 166,
+    "url": "https://rtionline.ladakh.gov.in/index.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:44:36.992Z"
+  },
+  {
+    "id": 167,
+    "url": "https://abcdgov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T11:44:36.994Z"
+  },
+  {
+    "id": 168,
+    "url": "https://rtionline.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:44:36.995Z"
+  },
+  {
+    "id": 169,
+    "url": "https://rti.rajasthan.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:53:15.834Z"
+  },
+  {
+    "id": 170,
+    "url": "https://rtionline.sikkim.gov.in/auth/login",
+    "status": 200,
+    "error": "Server Error",
+    "checked_at": "2025-11-21T11:53:15.836Z"
+  },
+  {
+    "id": 171,
+    "url": "https://rtionline.tripura.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:53:15.839Z"
+  },
+  {
+    "id": 172,
+    "url": "https://rtionline.up.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:53:15.841Z"
+  },
+  {
+    "id": 173,
+    "url": "https://rtionline.uk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:53:15.843Z"
+  },
+  {
+    "id": 174,
+    "url": "https://par.wb.gov.in/rtilogin.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:53:15.844Z"
+  },
+  {
+    "id": 175,
+    "url": "https://chandigarh.gov.in/submit-rti-application",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:53:15.846Z"
+  },
+  {
+    "id": 176,
+    "url": "https://rtionline.delhi.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:53:15.848Z"
+  },
+  {
+    "id": 177,
+    "url": "https://rtionline.jk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:53:15.850Z"
+  },
+  {
+    "id": 178,
+    "url": "https://rtionline.ladakh.gov.in/index.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:53:15.852Z"
+  },
+  {
+    "id": 179,
+    "url": "https://abcdgov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T11:53:15.854Z"
+  },
+  {
+    "id": 180,
+    "url": "https://rtionline.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:53:15.856Z"
+  },
+  {
+    "id": 181,
+    "url": "https://rti.rajasthan.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T11:59:53.185Z"
+  },
+  {
+    "id": 182,
+    "url": "https://rtionline.sikkim.gov.in/auth/login",
+    "status": 200,
+    "error": "Server Error",
+    "checked_at": "2025-11-21T11:59:53.188Z"
+  },
+  {
+    "id": 183,
+    "url": "https://rtionline.tripura.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:59:53.190Z"
+  },
+  {
+    "id": 184,
+    "url": "https://rtionline.up.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:59:53.193Z"
+  },
+  {
+    "id": 185,
+    "url": "https://rtionline.uk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:59:53.198Z"
+  },
+  {
+    "id": 186,
+    "url": "https://par.wb.gov.in/rtilogin.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:59:53.202Z"
+  },
+  {
+    "id": 187,
+    "url": "https://chandigarh.gov.in/submit-rti-application",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:59:53.204Z"
+  },
+  {
+    "id": 188,
+    "url": "https://rtionline.delhi.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:59:53.206Z"
+  },
+  {
+    "id": 189,
+    "url": "https://rtionline.jk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:59:53.210Z"
+  },
+  {
+    "id": 190,
+    "url": "https://rtionline.ladakh.gov.in/index.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T11:59:53.214Z"
+  },
+  {
+    "id": 191,
+    "url": "https://rtionline.ladakhs.gov.in/index.php",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T11:59:53.216Z"
+  },
+  {
+    "id": 192,
+    "url": "https://rti.rajasthan.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:02:01.631Z"
+  },
+  {
+    "id": 193,
+    "url": "https://rtionline.sikkim.gov.in/auth/login",
+    "status": 200,
+    "error": "Server Error",
+    "checked_at": "2025-11-21T12:02:01.637Z"
+  },
+  {
+    "id": 194,
+    "url": "https://rtionline.tripura.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:02:01.640Z"
+  },
+  {
+    "id": 195,
+    "url": "https://rtionline.up.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:02:01.642Z"
+  },
+  {
+    "id": 196,
+    "url": "https://rtionline.uk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:02:01.649Z"
+  },
+  {
+    "id": 197,
+    "url": "https://par.wb.gov.in/rtilogin.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:02:01.656Z"
+  },
+  {
+    "id": 198,
+    "url": "https://chandigarh.gov.in/submit-rti-application",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:02:01.659Z"
+  },
+  {
+    "id": 199,
+    "url": "https://rtionline.delhi.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:02:01.661Z"
+  },
+  {
+    "id": 200,
+    "url": "https://rtionline.jk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:02:01.663Z"
+  },
+  {
+    "id": 201,
+    "url": "https://rtionline.ladakh.gov.in/index.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:02:01.665Z"
+  },
+  {
+    "id": 202,
+    "url": "https://rti.rajasthan.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T12:03:41.808Z"
+  },
+  {
+    "id": 203,
+    "url": "https://rtionline.sikkim.gov.in/auth/login",
+    "status": 200,
+    "error": "Server Error",
+    "checked_at": "2025-11-21T12:03:41.810Z"
+  },
+  {
+    "id": 204,
+    "url": "https://rtionline.tripura.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:03:41.811Z"
+  },
+  {
+    "id": 205,
+    "url": "https://rtionline.up.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:03:41.813Z"
+  },
+  {
+    "id": 206,
+    "url": "https://rtionline.uk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:03:41.814Z"
+  },
+  {
+    "id": 207,
+    "url": "https://par.wb.gov.in/rtilogin.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:03:41.816Z"
+  },
+  {
+    "id": 208,
+    "url": "https://chandigarh.gov.in/submit-rti-application",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:03:41.818Z"
+  },
+  {
+    "id": 209,
+    "url": "https://rtionline.delhi.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:03:41.820Z"
+  },
+  {
+    "id": 210,
+    "url": "https://rtionline.jk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:03:41.822Z"
+  },
+  {
+    "id": 211,
+    "url": "https://rtionline.ladakh.gov.in/index.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:03:41.823Z"
+  },
+  {
+    "id": 212,
+    "url": "https://www.linkedin.com/feed/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:03:41.825Z"
+  },
+  {
+    "id": 213,
+    "url": "https://rti.rajasthan.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T12:04:56.883Z"
+  },
+  {
+    "id": 214,
+    "url": "https://rtionline.sikkim.gov.in/auth/login",
+    "status": 200,
+    "error": "Server Error",
+    "checked_at": "2025-11-21T12:04:56.888Z"
+  },
+  {
+    "id": 215,
+    "url": "https://rtionline.tripura.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:04:56.890Z"
+  },
+  {
+    "id": 216,
+    "url": "https://rtionline.up.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:04:56.891Z"
+  },
+  {
+    "id": 217,
+    "url": "https://rtionline.uk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:04:56.893Z"
+  },
+  {
+    "id": 218,
+    "url": "https://par.wb.gov.in/rtilogin.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:04:56.895Z"
+  },
+  {
+    "id": 219,
+    "url": "https://chandigarh.gov.in/submit-rti-application",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:04:56.897Z"
+  },
+  {
+    "id": 220,
+    "url": "https://rtionline.delhi.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:04:56.899Z"
+  },
+  {
+    "id": 221,
+    "url": "https://rtionline.jk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:04:56.901Z"
+  },
+  {
+    "id": 222,
+    "url": "https://rtionline.ladakh.gov.in/index.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:04:56.905Z"
+  },
+  {
+    "id": 223,
+    "url": "https://www.linkedin.com/feed/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:04:56.907Z"
+  },
+  {
+    "id": 224,
+    "url": "https://rti.rajasthan.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T12:35:57.673Z"
+  },
+  {
+    "id": 225,
+    "url": "https://rtionline.sikkim.gov.in/auth/login",
+    "status": 200,
+    "error": "Server Error",
+    "checked_at": "2025-11-21T12:35:57.677Z"
+  },
+  {
+    "id": 226,
+    "url": "https://rtionline.tripura.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:35:57.679Z"
+  },
+  {
+    "id": 227,
+    "url": "https://rtionline.up.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:35:57.681Z"
+  },
+  {
+    "id": 228,
+    "url": "https://rtionline.uk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:35:57.683Z"
+  },
+  {
+    "id": 229,
+    "url": "https://par.wb.gov.in/rtilogin.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:35:57.685Z"
+  },
+  {
+    "id": 230,
+    "url": "https://chandigarh.gov.in/submit-rti-application",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:35:57.687Z"
+  },
+  {
+    "id": 231,
+    "url": "https://rtionline.delhi.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:35:57.689Z"
+  },
+  {
+    "id": 232,
+    "url": "https://rtionline.jk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:35:57.691Z"
+  },
+  {
+    "id": 233,
+    "url": "https://rtionline.ladakh.gov.in/index.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:35:57.693Z"
+  },
+  {
+    "id": 234,
+    "url": "https://www.linkedin.com/feed/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:35:57.695Z"
+  },
+  {
+    "id": 235,
+    "url": "https://rti.rajasthan.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T12:37:00.909Z"
+  },
+  {
+    "id": 236,
+    "url": "https://rtionline.sikkim.gov.in/auth/login",
+    "status": 200,
+    "error": "Server Error",
+    "checked_at": "2025-11-21T12:37:00.912Z"
+  },
+  {
+    "id": 237,
+    "url": "https://rtionline.tripura.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:37:00.914Z"
+  },
+  {
+    "id": 238,
+    "url": "https://rtionline.up.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:37:00.916Z"
+  },
+  {
+    "id": 239,
+    "url": "https://rtionline.uk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:37:00.918Z"
+  },
+  {
+    "id": 240,
+    "url": "https://par.wb.gov.in/rtilogin.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:37:00.919Z"
+  },
+  {
+    "id": 241,
+    "url": "https://chandigarh.gov.in/submit-rti-application",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:37:00.921Z"
+  },
+  {
+    "id": 242,
+    "url": "https://rtionline.delhi.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:37:00.924Z"
+  },
+  {
+    "id": 243,
+    "url": "https://rtionline.jk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:37:00.926Z"
+  },
+  {
+    "id": 244,
+    "url": "https://rtionline.ladakh.gov.in/index.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:37:00.928Z"
+  },
+  {
+    "id": 245,
+    "url": "https://www.linkedin.com/feed/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:37:00.930Z"
+  },
+  {
+    "id": 246,
+    "url": "https://rti.rajasthan.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:38:49.264Z"
+  },
+  {
+    "id": 247,
+    "url": "https://rtionline.sikkim.gov.in/auth/login",
+    "status": 200,
+    "error": "Server Error",
+    "checked_at": "2025-11-21T12:38:49.270Z"
+  },
+  {
+    "id": 248,
+    "url": "https://rtionline.tripura.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:38:49.277Z"
+  },
+  {
+    "id": 249,
+    "url": "https://rtionline.up.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:38:49.282Z"
+  },
+  {
+    "id": 250,
+    "url": "https://rtionline.uk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:38:49.290Z"
+  },
+  {
+    "id": 251,
+    "url": "https://par.wb.gov.in/rtilogin.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:38:49.294Z"
+  },
+  {
+    "id": 252,
+    "url": "https://chandigarh.gov.in/submit-rti-application",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:38:49.299Z"
+  },
+  {
+    "id": 253,
+    "url": "https://rtionline.delhi.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:38:49.308Z"
+  },
+  {
+    "id": 254,
+    "url": "https://rtionline.jk.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:38:49.311Z"
+  },
+  {
+    "id": 255,
+    "url": "https://rtionline.ladakh.gov.in/index.php",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:38:49.313Z"
+  },
+  {
+    "id": 256,
+    "url": "https://www.linkedin.com/feed/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:38:49.318Z"
+  },
+  {
+    "id": 257,
+    "url": "https://www.linkedin.com/feed/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:38:49.321Z"
+  },
+  {
+    "id": 258,
+    "url": "https://rtionline.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:44:19.216Z"
+  },
+  {
+    "id": 259,
+    "url": "https://rtionline.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:44:44.314Z"
+  },
+  {
+    "id": 260,
+    "url": "https://rti.telangana.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:44:44.316Z"
+  },
+  {
+    "id": 261,
+    "url": "https://rtionline.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:45:00.966Z"
+  },
+  {
+    "id": 262,
+    "url": "https://rti.telangana.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:45:00.969Z"
+  },
+  {
+    "id": 263,
+    "url": "https://rtionlines.tn.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T12:45:00.971Z"
+  },
+  {
+    "id": 264,
+    "url": "https://rtionline.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:50:01.079Z"
+  },
+  {
+    "id": 265,
+    "url": "https://rti.telangana.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:50:01.083Z"
+  },
+  {
+    "id": 266,
+    "url": "https://rtionlines.tn.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T12:50:01.084Z"
+  },
+  {
+    "id": 267,
+    "url": "https://rtionline.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:53:46.313Z"
+  },
+  {
+    "id": 268,
+    "url": "https://rti.telangana.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:53:46.316Z"
+  },
+  {
+    "id": 269,
+    "url": "https://rtionlines.tn.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T12:53:46.319Z"
+  },
+  {
+    "id": 270,
+    "url": "https://rtionline.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:59:03.157Z"
+  },
+  {
+    "id": 271,
+    "url": "https://rti.telangana.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T12:59:03.160Z"
+  },
+  {
+    "id": 272,
+    "url": "https://rtionlines.tn.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T12:59:03.162Z"
+  },
+  {
+    "id": 273,
+    "url": "https://rtionline.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T13:09:36.310Z"
+  },
+  {
+    "id": 274,
+    "url": "https://rti.telangana.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T13:09:36.312Z"
+  },
+  {
+    "id": 275,
+    "url": "https://rtiportal.kerala.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T13:09:36.314Z"
+  },
+  {
+    "id": 276,
+    "url": "https://rti.arunachal.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T13:09:36.318Z"
+  },
+  {
+    "id": 277,
+    "url": "https://rtionline.assam.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T13:09:36.321Z"
+  },
+  {
+    "id": 278,
+    "url": "https://jaankari.bihar.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T13:09:36.324Z"
+  },
+  {
+    "id": 279,
+    "url": "https://rtionline.cg.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T13:09:36.326Z"
+  },
+  {
+    "id": 280,
+    "url": "https://rtionline.goa.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T13:09:36.328Z"
+  },
+  {
+    "id": 281,
+    "url": "https://rtionline.gujarat.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T13:09:36.330Z"
+  },
+  {
+    "id": 282,
+    "url": "https://rtionline.haryana.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T13:09:37.778Z"
+  },
+  {
+    "id": 283,
+    "url": "https://rtionline.hp.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T13:09:38.603Z"
+  },
+  {
+    "id": 284,
+    "url": "https://rtionline.jharkhand.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T13:09:39.760Z"
+  },
+  {
+    "id": 285,
+    "url": "https://rtionline.maharashtra.gov.in/",
+    "status": null,
+    "error": "Page Not Loading",
+    "checked_at": "2025-11-21T13:09:40.240Z"
+  },
+  {
+    "id": 286,
+    "url": "https://rtionline.mp.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T13:09:41.066Z"
+  },
+  {
+    "id": 287,
+    "url": "https://rtionline.meghalaya.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T13:09:41.583Z"
+  },
+  {
+    "id": 288,
+    "url": "https://rtionline.mizoram.gov.in/",
+    "status": null,
+    "error": "Timeout",
+    "checked_at": "2025-11-21T13:09:42.274Z"
+  },
+  {
+    "id": 289,
+    "url": "https://rtionline.odisha.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T13:09:42.894Z"
+  },
+  {
+    "id": 290,
+    "url": "https://rtionline.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T13:14:04.019Z"
+  },
+  {
+    "id": 291,
+    "url": "https://rti.telangana.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T13:14:04.026Z"
+  },
+  {
+    "id": 292,
+    "url": "https://rtiportal.kerala.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T13:14:04.033Z"
+  },
+  {
+    "id": 293,
+    "url": "https://rti.arunachal.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T13:14:04.039Z"
+  },
+  {
+    "id": 294,
+    "url": "https://rtionline.assam.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T13:14:04.048Z"
+  },
+  {
+    "id": 295,
+    "url": "https://jaankari.bihar.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T13:14:04.066Z"
+  },
+  {
+    "id": 296,
+    "url": "https://rtionline.cg.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T13:14:04.077Z"
+  },
+  {
+    "id": 297,
+    "url": "https://rtionline.goa.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T13:14:04.092Z"
+  },
+  {
+    "id": 298,
+    "url": "https://rtionline.gujarat.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T13:14:04.103Z"
+  },
+  {
+    "id": 299,
+    "url": "https://rtionline.haryana.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T13:14:05.482Z"
+  },
+  {
+    "id": 300,
+    "url": "https://rtionline.hp.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T13:14:06.327Z"
+  },
+  {
+    "id": 301,
+    "url": "https://rtionline.jharkhand.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T13:14:07.515Z"
+  },
+  {
+    "id": 302,
+    "url": "https://rtionline.maharashtra.gov.in/",
+    "status": null,
+    "error": "Page Not Loading",
+    "checked_at": "2025-11-21T13:14:08.233Z"
+  },
+  {
+    "id": 303,
+    "url": "https://rtionline.mp.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T13:14:09.058Z"
+  },
+  {
+    "id": 304,
+    "url": "https://rtionline.meghalaya.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T13:14:09.755Z"
+  },
+  {
+    "id": 305,
+    "url": "https://rtionline.mizoram.gov.in/",
+    "status": null,
+    "error": "Timeout",
+    "checked_at": "2025-11-21T13:14:10.511Z"
+  },
+  {
+    "id": 306,
+    "url": "https://rtionline.odisha.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T13:14:11.364Z"
+  },
+  {
+    "id": 307,
+    "url": "https://rtionline.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T13:19:21.901Z"
+  },
+  {
+    "id": 308,
+    "url": "https://rti.telangana.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T13:19:21.998Z"
+  },
+  {
+    "id": 309,
+    "url": "https://rtiportal.kerala.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T13:19:22.042Z"
+  },
+  {
+    "id": 310,
+    "url": "https://rti.arunachal.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T13:19:22.108Z"
+  },
+  {
+    "id": 311,
+    "url": "https://rtionline.assam.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T13:19:22.149Z"
+  },
+  {
+    "id": 312,
+    "url": "https://jaankari.bihar.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T13:19:22.166Z"
+  },
+  {
+    "id": 313,
+    "url": "https://rtionline.cg.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-21T13:19:22.186Z"
+  },
+  {
+    "id": 314,
+    "url": "https://rtionline.goa.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-21T13:19:22.197Z"
+  },
+  {
+    "id": 315,
+    "url": "https://rtionline.gujarat.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T13:19:22.273Z"
+  },
+  {
+    "id": 316,
+    "url": "https://rtionline.haryana.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T13:19:25.609Z"
+  },
+  {
+    "id": 317,
+    "url": "https://rtionline.hp.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T13:19:26.308Z"
+  },
+  {
+    "id": 318,
+    "url": "https://rtionline.jharkhand.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T13:19:27.230Z"
+  },
+  {
+    "id": 319,
+    "url": "https://rtionline.maharashtra.gov.in/",
+    "status": null,
+    "error": "Page Not Loading",
+    "checked_at": "2025-11-21T13:19:28.067Z"
+  },
+  {
+    "id": 320,
+    "url": "https://rtionline.mp.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T13:19:28.772Z"
+  },
+  {
+    "id": 321,
+    "url": "https://rtionline.meghalaya.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T13:19:29.381Z"
+  },
+  {
+    "id": 322,
+    "url": "https://rtionline.mizoram.gov.in/",
+    "status": null,
+    "error": "Timeout",
+    "checked_at": "2025-11-21T13:19:30.109Z"
+  },
+  {
+    "id": 323,
+    "url": "https://rtionline.odisha.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-21T13:19:30.852Z"
+  },
+  {
+    "id": 324,
+    "url": "https://rtionline.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-22T05:27:28.499Z"
+  },
+  {
+    "id": 325,
+    "url": "https://rti.telangana.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-22T05:27:28.508Z"
+  },
+  {
+    "id": 326,
+    "url": "https://rtiportal.kerala.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-22T05:27:28.523Z"
+  },
+  {
+    "id": 327,
+    "url": "https://rti.arunachal.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-22T05:27:28.533Z"
+  },
+  {
+    "id": 328,
+    "url": "https://rtionline.assam.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-22T05:27:28.543Z"
+  },
+  {
+    "id": 329,
+    "url": "https://jaankari.bihar.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-22T05:27:28.556Z"
+  },
+  {
+    "id": 330,
+    "url": "https://rtionline.cg.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-22T05:27:28.579Z"
+  },
+  {
+    "id": 331,
+    "url": "https://rtionline.goa.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-22T05:27:28.593Z"
+  },
+  {
+    "id": 332,
+    "url": "https://rtionline.gujarat.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-22T05:27:28.606Z"
+  },
+  {
+    "id": 333,
+    "url": "https://rtionline.haryana.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-22T05:27:30.294Z"
+  },
+  {
+    "id": 334,
+    "url": "https://rtionline.hp.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-22T05:27:31.051Z"
+  },
+  {
+    "id": 335,
+    "url": "https://rtionline.jharkhand.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-22T05:27:31.597Z"
+  },
+  {
+    "id": 336,
+    "url": "https://rtionline.maharashtra.gov.in/",
+    "status": null,
+    "error": "Page Not Loading",
+    "checked_at": "2025-11-22T05:27:32.472Z"
+  },
+  {
+    "id": 337,
+    "url": "https://rtionline.mp.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-22T05:27:33.229Z"
+  },
+  {
+    "id": 338,
+    "url": "https://rtionline.meghalaya.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-22T05:27:33.859Z"
+  },
+  {
+    "id": 339,
+    "url": "https://rtionline.mizoram.gov.in/",
+    "status": null,
+    "error": "Timeout",
+    "checked_at": "2025-11-22T05:27:34.499Z"
+  },
+  {
+    "id": 340,
+    "url": "https://rtionline.odisha.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-22T05:27:35.207Z"
+  },
+  {
+    "id": 341,
+    "url": "https://rtionline.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-22T05:46:26.009Z"
+  },
+  {
+    "id": 342,
+    "url": "https://rti.telangana.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-22T05:46:26.033Z"
+  },
+  {
+    "id": 343,
+    "url": "https://rtiportal.kerala.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-22T05:46:26.046Z"
+  },
+  {
+    "id": 344,
+    "url": "https://rti.arunachal.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-22T05:46:26.060Z"
+  },
+  {
+    "id": 345,
+    "url": "https://rtionline.assam.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-22T05:46:26.078Z"
+  },
+  {
+    "id": 346,
+    "url": "https://jaankari.bihar.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-22T05:46:26.092Z"
+  },
+  {
+    "id": 347,
+    "url": "https://rtionline.cg.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-22T05:46:26.119Z"
+  },
+  {
+    "id": 348,
+    "url": "https://rtionline.goa.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-22T05:46:26.134Z"
+  },
+  {
+    "id": 349,
+    "url": "https://rtionline.gujarat.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-22T05:46:26.150Z"
+  },
+  {
+    "id": 350,
+    "url": "https://rtionline.haryana.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-22T05:46:27.597Z"
+  },
+  {
+    "id": 351,
+    "url": "https://rtionline.hp.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-22T05:46:28.278Z"
+  },
+  {
+    "id": 352,
+    "url": "https://rtionline.jharkhand.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-22T05:46:29.405Z"
+  },
+  {
+    "id": 353,
+    "url": "https://rtionline.maharashtra.gov.in/",
+    "status": null,
+    "error": "Page Not Loading",
+    "checked_at": "2025-11-22T05:46:30.115Z"
+  },
+  {
+    "id": 354,
+    "url": "https://rtionline.mp.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-22T05:46:30.911Z"
+  },
+  {
+    "id": 355,
+    "url": "https://rtionline.meghalaya.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-22T05:46:31.635Z"
+  },
+  {
+    "id": 356,
+    "url": "https://rtionline.mizoram.gov.in/",
+    "status": null,
+    "error": "Timeout",
+    "checked_at": "2025-11-22T05:46:32.192Z"
+  },
+  {
+    "id": 357,
+    "url": "https://rtionline.odisha.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-22T05:46:32.923Z"
+  },
+  {
+    "id": 358,
+    "url": "https://rtionline.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-22T05:55:07.502Z"
+  },
+  {
+    "id": 359,
+    "url": "https://rti.telangana.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-22T05:55:07.619Z"
+  },
+  {
+    "id": 360,
+    "url": "https://rtiportal.kerala.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-22T05:55:07.907Z"
+  },
+  {
+    "id": 361,
+    "url": "https://rti.arunachal.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-22T05:55:07.928Z"
+  },
+  {
+    "id": 362,
+    "url": "https://rtionline.assam.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-22T05:55:07.946Z"
+  },
+  {
+    "id": 363,
+    "url": "https://jaankari.bihar.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-22T05:55:07.962Z"
+  },
+  {
+    "id": 364,
+    "url": "https://rtionline.cg.gov.in/",
+    "status": 200,
+    "error": "Page Not Functional",
+    "checked_at": "2025-11-22T05:55:07.976Z"
+  },
+  {
+    "id": 365,
+    "url": "https://rtionline.goa.gov.in/",
+    "status": 200,
+    "error": null,
+    "checked_at": "2025-11-22T05:55:07.985Z"
+  },
+  {
+    "id": 366,
+    "url": "https://rtionline.gujarat.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-22T05:55:08.107Z"
+  },
+  {
+    "id": 367,
+    "url": "https://rtionline.haryana.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-22T05:55:08.122Z"
+  },
+  {
+    "id": 368,
+    "url": "https://rtionline.hp.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-22T05:55:08.130Z"
+  },
+  {
+    "id": 369,
+    "url": "https://rtionline.jharkhand.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-22T05:55:08.139Z"
+  },
+  {
+    "id": 370,
+    "url": "https://rtionline.maharashtra.gov.in/",
+    "status": null,
+    "error": "Page Not Loading",
+    "checked_at": "2025-11-22T05:55:08.150Z"
+  },
+  {
+    "id": 371,
+    "url": "https://rtionline.mp.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-22T05:55:08.161Z"
+  },
+  {
+    "id": 372,
+    "url": "https://rtionline.meghalaya.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-22T05:55:08.173Z"
+  },
+  {
+    "id": 373,
+    "url": "https://rtionline.mizoram.gov.in/",
+    "status": null,
+    "error": "Timeout",
+    "checked_at": "2025-11-22T05:55:08.186Z"
+  },
+  {
+    "id": 374,
+    "url": "https://rtionline.odisha.gov.in/",
+    "status": null,
+    "error": "Connection failed",
+    "checked_at": "2025-11-22T05:55:08.201Z"
+  }
+]
