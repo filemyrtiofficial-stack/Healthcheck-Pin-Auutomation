@@ -190,60 +190,52 @@ app.delete('/website/:id', (req, res) => {
 
 // GET /website/check → manually triggered check
 app.get('/website/check', async (req, res) => {
+  // Set a longer timeout for this endpoint (10 minutes)
+  req.setTimeout(600000);
+
   try {
     const websites = loadWebsites();
+    logger.info(`Starting website check for ${websites.length} websites`);
+
     const whatsappContact = process.env.WHATSAPP_ADMIN_NUMBER || process.env.ADMIN_PHONE_NUMBER;
 
-    // Initialize WhatsApp if configured
+    // Initialize WhatsApp if configured (but don't wait too long - max 2 minutes)
     let whatsappReady = false;
     if (whatsappContact) {
       try {
         logger.info('Initializing WhatsApp...');
         await whatsappService.initialize();
-        // Wait MUCH longer for connection (up to 15 minutes for QR scan + authentication)
-        // Authentication can take time after QR scan, so we need extra patience
+        // Wait for connection but with a shorter timeout for API requests (2 minutes max)
         let attempts = 0;
-        const maxAttempts = 1800; // 15 minutes (1800 * 500ms = 15 minutes)
+        const maxAttempts = 240; // 2 minutes (240 * 500ms = 2 minutes) - shorter for API
         let lastStatus = false;
-        let connectingMessageShown = false;
 
         while (!whatsappService.getConnectionStatus() && attempts < maxAttempts) {
           await new Promise(resolve => setTimeout(resolve, 500));
           attempts++;
-
           const currentStatus = whatsappService.getConnectionStatus();
-
-          // Show message when connection status changes
-          if (currentStatus !== lastStatus) {
-            if (currentStatus) {
-              logger.info('WhatsApp connection established!');
-            } else if (!connectingMessageShown && attempts > 10) {
-              logger.info('Waiting for WhatsApp authentication to complete...');
-              connectingMessageShown = true;
-            }
-            lastStatus = currentStatus;
+          if (currentStatus !== lastStatus && currentStatus) {
+            logger.info('WhatsApp connection established!');
+            break;
           }
-
-          // Log progress every 30 seconds (less spam)
-          if (attempts % 60 === 0 && attempts > 0) {
-            const minutes = Math.floor(attempts / 120);
-            const seconds = Math.floor((attempts % 120) / 2);
-            logger.debug(`Still waiting for WhatsApp connection... (${minutes}m ${seconds}s)`);
-          }
+          lastStatus = currentStatus;
         }
         whatsappReady = whatsappService.getConnectionStatus();
         if (whatsappReady) {
           logger.info('WhatsApp connected successfully!');
         } else {
-          logger.warn('WhatsApp connection timeout after 15 minutes.');
+          logger.warn('WhatsApp connection timeout after 2 minutes. Continuing without WhatsApp.');
         }
       } catch (error) {
         logger.error(`WhatsApp initialization error: ${error.message}`, error);
+        // Continue without WhatsApp - don't fail the entire check
       }
     }
 
     // Check all websites
+    logger.info('Starting to check websites...');
     const results = await checkWebsites(websites);
+    logger.info(`Completed checking ${results.length} websites`);
 
     // Process results
     const processedResults = [];

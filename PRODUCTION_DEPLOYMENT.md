@@ -179,9 +179,10 @@ server {
         # Nginx allows all HTTP methods by default, which is what we want
     }
 
-    # Increase timeout for long-running requests
-    proxy_read_timeout 300s;
+    # Increase timeout for long-running requests (website checks can take time)
+    proxy_read_timeout 600s;  # 10 minutes - increased for website checks
     proxy_connect_timeout 75s;
+    proxy_send_timeout 600s;  # 10 minutes
 }
 ```
 

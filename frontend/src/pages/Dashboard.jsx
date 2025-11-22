@@ -181,7 +181,7 @@ export default function Dashboard() {
   const handleRunNow = async () => {
     try {
       setChecking(true)
-      toast.loading('Checking all websites...', { id: 'checking' })
+      toast.loading('Checking all websites... This may take a few minutes.', { id: 'checking', duration: 600000 })
 
       const data = await checkNow()
 
@@ -203,7 +203,25 @@ export default function Dashboard() {
         toast.error(`Error: ${data.error}`, { id: 'checking' })
       }
     } catch (error) {
-      toast.error(`Error: ${error.message}`, { id: 'checking' })
+      // Handle timeout and other errors
+      let errorMessage = 'Failed to check websites';
+
+      if (error.code === 'ECONNABORTED' || error.message?.includes('timeout') || error.response?.status === 504) {
+        errorMessage = 'Request timed out. The check is still running in the background. Please wait a moment and refresh the page to see results.';
+        // Still try to reload statuses in case the check completed
+        setTimeout(() => {
+          loadStatuses()
+        }, 5000)
+      } else if (error.response?.status === 504) {
+        errorMessage = 'Gateway timeout. The server is still processing your request. Please wait and refresh the page.';
+        setTimeout(() => {
+          loadStatuses()
+        }, 5000)
+      } else {
+        errorMessage = error.response?.data?.error || error.message || 'Failed to check websites';
+      }
+
+      toast.error(errorMessage, { id: 'checking', duration: 10000 })
     } finally {
       setChecking(false)
     }
