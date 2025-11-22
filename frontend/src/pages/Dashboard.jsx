@@ -241,48 +241,65 @@ export default function Dashboard() {
   const handleRunNow = async () => {
     try {
       setChecking(true)
-      toast.loading('Checking all websites... This may take a few minutes.', { id: 'checking', duration: 600000 })
+      toast.loading('Starting website check... This will run in the background.', { id: 'checking' })
 
       const data = await checkNow()
 
       if (data.success) {
-        // Reload statuses to get the latest for all websites
-        await loadStatuses()
-
         toast.success(
-          `Check completed! UP: ${data.summary.up} | DOWN: ${data.summary.down}`,
-          { id: 'checking' }
+          `Check started! Checking ${data.websitesCount || 0} websites in the background. Results will appear shortly.`,
+          { id: 'checking', duration: 5000 }
         )
 
-        if (data.summary.down > 0) {
+        // Wait a bit then reload statuses to get updated data
+        setTimeout(async () => {
+          await loadStatuses()
+          // Keep checking every 5 seconds until we have results
+          let attempts = 0
+          const maxAttempts = 20 // Check for up to 100 seconds (20 * 5s = 100s)
+
+          const checkInterval = setInterval(async () => {
+            attempts++
+            console.log(`[Frontend] Checking for results (attempt ${attempts}/${maxAttempts})...`)
+            await loadStatuses()
+
+            // Get fresh statuses from state (need to check after loadStatuses updates state)
+            // We'll check in the next interval after state updates
+            if (attempts >= maxAttempts) {
+              clearInterval(checkInterval)
+              setChecking(false)
+              toast.success('Website check should be complete. Refreshing statuses...', { id: 'checking' })
+              // Final reload
+              await loadStatuses()
+            }
+          }, 5000)
+
+          // Also set a timeout to stop checking after max time
           setTimeout(() => {
-            navigate('/down')
-          }, 2000)
-        }
+            clearInterval(checkInterval)
+            setChecking(false)
+            loadStatuses() // Final reload
+          }, maxAttempts * 5000)
+        }, 5000) // Wait 5 seconds before first check
       } else {
         toast.error(`Error: ${data.error}`, { id: 'checking' })
+        setChecking(false)
       }
     } catch (error) {
-      // Handle timeout and other errors
-      let errorMessage = 'Failed to check websites';
+      // Handle errors
+      let errorMessage = 'Failed to start website check';
 
       if (error.code === 'ECONNABORTED' || error.message?.includes('timeout') || error.response?.status === 504) {
-        errorMessage = 'Request timed out. The check is still running in the background. Please wait a moment and refresh the page to see results.';
-        // Still try to reload statuses in case the check completed
-        setTimeout(() => {
-          loadStatuses()
-        }, 5000)
-      } else if (error.response?.status === 504) {
-        errorMessage = 'Gateway timeout. The server is still processing your request. Please wait and refresh the page.';
+        errorMessage = 'Request timed out, but the check may have started. Please refresh the page in a moment.';
+        // Still try to reload statuses
         setTimeout(() => {
           loadStatuses()
         }, 5000)
       } else {
-        errorMessage = error.response?.data?.error || error.message || 'Failed to check websites';
+        errorMessage = error.response?.data?.error || error.message || 'Failed to start website check';
       }
 
       toast.error(errorMessage, { id: 'checking', duration: 10000 })
-    } finally {
       setChecking(false)
     }
   }

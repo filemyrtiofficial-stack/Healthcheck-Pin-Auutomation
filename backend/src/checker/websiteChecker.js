@@ -4,9 +4,9 @@ const path = require('path');
 const fs = require('fs');
 const { logger } = require('../utils/logger');
 
-const MAX_RETRIES = parseInt(process.env.MAX_RETRIES) || 3;
-const RETRY_DELAY = parseInt(process.env.RETRY_DELAY) || 5000;
-const REQUEST_TIMEOUT = 30000; // 30 seconds
+const MAX_RETRIES = parseInt(process.env.MAX_RETRIES) || 2; // Reduced from 3 to 2 for faster checks
+const RETRY_DELAY = parseInt(process.env.RETRY_DELAY) || 3000; // Reduced from 5000 to 3000ms
+const REQUEST_TIMEOUT = 15000; // Reduced from 30 seconds to 15 seconds for faster checks
 
 // Ensure screenshots directory exists
 const screenshotsDir = path.join(__dirname, '../../logs/screenshots');
@@ -53,10 +53,10 @@ async function takeScreenshot(website, error) {
     const page = await browser.newPage();
     await page.setViewport({ width: 1280, height: 720 });
 
-    // Set a reasonable timeout
+    // Set a reasonable timeout (reduced for faster checks)
     await page.goto(website.url, {
       waitUntil: 'networkidle0',
-      timeout: 30000
+      timeout: 15000 // Reduced from 30000 to 15000ms for faster checks
     }).catch(() => {
       // Continue even if page doesn't fully load
     });

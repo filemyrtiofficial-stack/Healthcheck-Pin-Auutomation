@@ -188,138 +188,134 @@ app.delete('/website/:id', (req, res) => {
   }
 });
 
-// GET /website/check → manually triggered check
+// GET /website/check → manually triggered check (runs in background)
 app.get('/website/check', async (req, res) => {
-  // Set a longer timeout for this endpoint (10 minutes)
-  req.setTimeout(600000);
-
   try {
     const websites = loadWebsites();
-    logger.info(`Starting website check for ${websites.length} websites`);
+    logger.info(`[API] Website check requested for ${websites.length} websites`);
 
-    const whatsappContact = process.env.WHATSAPP_ADMIN_NUMBER || process.env.ADMIN_PHONE_NUMBER;
-
-    // Initialize WhatsApp if configured (but don't wait too long - max 2 minutes)
-    let whatsappReady = false;
-    if (whatsappContact) {
-      try {
-        logger.info('Initializing WhatsApp...');
-        await whatsappService.initialize();
-        // Wait for connection but with a shorter timeout for API requests (2 minutes max)
-        let attempts = 0;
-        const maxAttempts = 240; // 2 minutes (240 * 500ms = 2 minutes) - shorter for API
-        let lastStatus = false;
-
-        while (!whatsappService.getConnectionStatus() && attempts < maxAttempts) {
-          await new Promise(resolve => setTimeout(resolve, 500));
-          attempts++;
-          const currentStatus = whatsappService.getConnectionStatus();
-          if (currentStatus !== lastStatus && currentStatus) {
-            logger.info('WhatsApp connection established!');
-            break;
-          }
-          lastStatus = currentStatus;
-        }
-        whatsappReady = whatsappService.getConnectionStatus();
-        if (whatsappReady) {
-          logger.info('WhatsApp connected successfully!');
-        } else {
-          logger.warn('WhatsApp connection timeout after 2 minutes. Continuing without WhatsApp.');
-        }
-      } catch (error) {
-        logger.error(`WhatsApp initialization error: ${error.message}`, error);
-        // Continue without WhatsApp - don't fail the entire check
-      }
-    }
-
-    // Check all websites
-    logger.info('Starting to check websites...');
-    const results = await checkWebsites(websites);
-    logger.info(`Completed checking ${results.length} websites`);
-
-    // Process results
-    const processedResults = [];
-    const summary = { up: 0, down: 0 };
-    const downWebsites = []; // Collect all down websites for consolidated message
-
-    for (const result of results) {
-      const { website, status, error, screenshot } = result;
-
-      // Save status
-      await saveStatus(website.url, status, error);
-
-      // Determine if website is UP (only if status code is 200-399)
-      // DOWN if: status code is 4xx/5xx OR status is null with an error
-      const isUp = status !== null && status >= 200 && status < 400;
-      // Website is DOWN if:
-      // 1. Status code exists and is NOT 200-399 (i.e., 4xx or 5xx)
-      // 2. Status is null BUT there's an error (connection failed, timeout, etc.)
-      const isDown = (status !== null && (status < 200 || status >= 400)) ||
-        (status === null && error && error.trim() !== '');
-
-      if (isUp) {
-        summary.up++;
-      } else if (isDown) {
-        summary.down++;
-        // Add to down websites list for consolidated message
-        downWebsites.push({ website, status, error, screenshot });
-      }
-
-      processedResults.push({
-        website: website.name,
-        url: website.url,
-        status: isUp ? 'UP' : 'DOWN',
-        statusCode: status,
-        error: error || null,
-        screenshot: screenshot ? path.relative(process.cwd(), screenshot) : null,
-        timestamp: new Date().toISOString()
-      });
-    }
-
-    // Send individual WhatsApp messages with screenshots for each down website
-    if (downWebsites.length > 0 && whatsappReady && whatsappContact) {
-      try {
-        logger.info(`Sending individual WhatsApp notifications for ${downWebsites.length} down website(s)...`);
-
-        // Send individual message with screenshot for each down website
-        for (const downWebsite of downWebsites) {
-          const { website, status, error, screenshot } = downWebsite;
-
-          try {
-            // Generate individual message for this website
-            const message = generateIndividualWhatsAppMessage(website, status, error, screenshot);
-
-            // Send message with screenshot if available
-            if (screenshot) {
-              await whatsappService.sendMessage(message, screenshot);
-              logger.info(`WhatsApp notification with screenshot sent for ${website.name}`);
-            } else {
-              await whatsappService.sendMessage(message);
-              logger.info(`WhatsApp notification sent for ${website.name} (no screenshot available)`);
-            }
-
-            // Add a small delay between messages to avoid rate limiting
-            await new Promise(resolve => setTimeout(resolve, 2000));
-          } catch (websiteError) {
-            logger.error(`Error sending WhatsApp for ${website.name}: ${websiteError.message}`);
-            // Continue with next website even if one fails
-          }
-        }
-
-        logger.info(`All WhatsApp notifications sent successfully!`);
-      } catch (whatsappError) {
-        logger.error(`WhatsApp error: ${whatsappError.message}`);
-      }
-    }
-
+    // Return immediately - process in background
     res.json({
       success: true,
-      results: processedResults,
-      summary,
+      message: 'Website check started in background',
+      websitesCount: websites.length,
       timestamp: new Date().toISOString()
     });
+
+    // Process in background (don't await - fire and forget)
+    setImmediate(async () => {
+      try {
+        const whatsappContact = process.env.WHATSAPP_ADMIN_NUMBER || process.env.ADMIN_PHONE_NUMBER;
+
+        // Initialize WhatsApp if configured (but don't wait too long - max 30 seconds)
+        let whatsappReady = false;
+        if (whatsappContact) {
+          try {
+            logger.info('[Background] Initializing WhatsApp...');
+            await whatsappService.initialize();
+            // Wait for connection but with a very short timeout for API requests (30 seconds max)
+            let attempts = 0;
+            const maxAttempts = 60; // 30 seconds (60 * 500ms = 30 seconds)
+            let lastStatus = false;
+
+            while (!whatsappService.getConnectionStatus() && attempts < maxAttempts) {
+              await new Promise(resolve => setTimeout(resolve, 500));
+              attempts++;
+              const currentStatus = whatsappService.getConnectionStatus();
+              if (currentStatus !== lastStatus && currentStatus) {
+                logger.info('[Background] WhatsApp connection established!');
+                break;
+              }
+              lastStatus = currentStatus;
+            }
+            whatsappReady = whatsappService.getConnectionStatus();
+            if (whatsappReady) {
+              logger.info('[Background] WhatsApp connected successfully!');
+            } else {
+              logger.warn('[Background] WhatsApp connection timeout after 30 seconds. Continuing without WhatsApp.');
+            }
+          } catch (error) {
+            logger.error(`[Background] WhatsApp initialization error: ${error.message}`, error);
+            // Continue without WhatsApp - don't fail the entire check
+          }
+        }
+
+        // Check all websites
+        logger.info('[Background] Starting to check websites...');
+        const results = await checkWebsites(websites);
+        logger.info(`[Background] Completed checking ${results.length} websites`);
+
+        // Process results
+        const summary = { up: 0, down: 0 };
+        const downWebsites = []; // Collect all down websites for consolidated message
+
+        for (const result of results) {
+          const { website, status, error, screenshot } = result;
+
+          // Save status
+          await saveStatus(website.url, status, error);
+
+          // Determine if website is UP (only if status code is 200-399)
+          // DOWN if: status code is 4xx/5xx OR status is null with an error
+          const isUp = status !== null && status >= 200 && status < 400;
+          // Website is DOWN if:
+          // 1. Status code exists and is NOT 200-399 (i.e., 4xx or 5xx)
+          // 2. Status is null BUT there's an error (connection failed, timeout, etc.)
+          const isDown = (status !== null && (status < 200 || status >= 400)) ||
+            (status === null && error && error.trim() !== '');
+
+          if (isUp) {
+            summary.up++;
+          } else if (isDown) {
+            summary.down++;
+            // Add to down websites list for consolidated message
+            downWebsites.push({ website, status, error, screenshot });
+          }
+        }
+
+        logger.info(`[Background] Check complete: ${summary.up} UP, ${summary.down} DOWN`);
+
+        // Send individual WhatsApp messages with screenshots for each down website
+        if (downWebsites.length > 0 && whatsappReady && whatsappContact) {
+          try {
+            logger.info(`[Background] Sending individual WhatsApp notifications for ${downWebsites.length} down website(s)...`);
+
+            // Send individual message with screenshot for each down website
+            for (const downWebsite of downWebsites) {
+              const { website, status, error, screenshot } = downWebsite;
+
+              try {
+                // Generate individual message for this website
+                const message = generateIndividualWhatsAppMessage(website, status, error, screenshot);
+
+                // Send message with screenshot if available
+                if (screenshot) {
+                  await whatsappService.sendMessage(message, screenshot);
+                  logger.info(`[Background] WhatsApp notification with screenshot sent for ${website.name}`);
+                } else {
+                  await whatsappService.sendMessage(message);
+                  logger.info(`[Background] WhatsApp notification sent for ${website.name} (no screenshot available)`);
+                }
+
+                // Add a small delay between messages to avoid rate limiting
+                await new Promise(resolve => setTimeout(resolve, 2000));
+              } catch (websiteError) {
+                logger.error(`[Background] Error sending WhatsApp for ${website.name}: ${websiteError.message}`);
+                // Continue with next website even if one fails
+              }
+            }
+
+            logger.info(`[Background] All WhatsApp notifications sent successfully!`);
+          } catch (whatsappError) {
+            logger.error(`[Background] WhatsApp error: ${whatsappError.message}`);
+          }
+        }
+      } catch (error) {
+        logger.error(`[Background] Error running health check: ${error.message}`, error);
+      }
+    });
   } catch (error) {
-    logger.error(`Error running health check: ${error.message}`);
+    logger.error(`[API] Error starting website check: ${error.message}`);
     res.status(500).json({ success: false, error: error.message });
   }
 });
