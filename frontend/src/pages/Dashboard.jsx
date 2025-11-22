@@ -53,20 +53,40 @@ export default function Dashboard() {
   const loadStatuses = async () => {
     try {
       console.log('[FRONTEND DEBUG] ========== loadStatuses called ==========')
+      console.log('[FRONTEND DEBUG] Current websites count:', websites.length)
       console.log('[FRONTEND DEBUG] Current websites:', websites.map(w => ({ name: w.name, url: w.url })))
+      console.log('[FRONTEND DEBUG] Current websiteStatuses state:', websiteStatuses)
 
+      console.log('[FRONTEND DEBUG] Calling getWebsiteStatuses()...')
       const data = await getWebsiteStatuses()
-      console.log('[FRONTEND DEBUG] API response:', data)
+      console.log('[FRONTEND DEBUG] ========== API RESPONSE RECEIVED ==========')
+      console.log('[FRONTEND DEBUG] Full API response:', JSON.stringify(data, null, 2))
+      console.log('[FRONTEND DEBUG] Response success:', data?.success)
+      console.log('[FRONTEND DEBUG] Response has websiteStatuses:', !!data?.websiteStatuses)
+      console.log('[FRONTEND DEBUG] websiteStatuses type:', typeof data?.websiteStatuses)
+      console.log('[FRONTEND DEBUG] websiteStatuses is array:', Array.isArray(data?.websiteStatuses))
 
-      if (data.success && data.websiteStatuses) {
+      if (data?.websiteStatuses) {
+        console.log('[FRONTEND DEBUG] websiteStatuses length:', data.websiteStatuses.length)
+      }
+
+      if (data && data.success && data.websiteStatuses && Array.isArray(data.websiteStatuses)) {
+        console.log('[FRONTEND DEBUG] ========== PROCESSING VALID RESPONSE ==========')
         console.log('[FRONTEND DEBUG] Received', data.websiteStatuses.length, 'statuses from API')
-        console.log('[FRONTEND DEBUG] Statuses:', data.websiteStatuses.map(ws => ({
-          name: ws.name,
-          url: ws.url,
-          status: ws.status,
-          statusCode: ws.statusCode,
-          error: ws.error
-        })))
+
+        // Log each status entry in detail
+        data.websiteStatuses.forEach((ws, index) => {
+          console.log(`[FRONTEND DEBUG] Status ${index + 1}:`, {
+            name: ws.name,
+            url: ws.url,
+            status: ws.status,
+            statusType: typeof ws.status,
+            statusCode: ws.statusCode,
+            error: ws.error,
+            checked_at: ws.checked_at,
+            checked_atType: typeof ws.checked_at
+          })
+        })
 
         const statusMap = {}
 
@@ -81,12 +101,16 @@ export default function Dashboard() {
         })
 
         // Then update with actual statuses from API
-        data.websiteStatuses.forEach(ws => {
-          console.log(`[FRONTEND DEBUG] Processing status for ${ws.name} (${ws.url}):`, {
-            rawStatus: ws.status,
+        data.websiteStatuses.forEach((ws, index) => {
+          console.log(`[FRONTEND DEBUG] ========== Processing status ${index + 1}/${data.websiteStatuses.length} ==========`)
+          console.log(`[FRONTEND DEBUG] Website: ${ws.name} (${ws.url})`)
+          console.log(`[FRONTEND DEBUG] Raw data:`, {
+            status: ws.status,
             statusType: typeof ws.status,
             statusCode: ws.statusCode,
-            error: ws.error
+            error: ws.error,
+            checked_at: ws.checked_at,
+            checked_atType: typeof ws.checked_at
           })
 
           // Normalize status to uppercase string
@@ -104,30 +128,56 @@ export default function Dashboard() {
             console.log(`[FRONTEND DEBUG]   → No status provided, using UNKNOWN`)
           }
 
+          const lastCheckedValue = ws.checked_at || null
+          console.log(`[FRONTEND DEBUG]   → lastChecked value: ${lastCheckedValue} (type: ${typeof lastCheckedValue})`)
+
           if (statusMap[ws.url]) {
+            const oldStatus = statusMap[ws.url]
             statusMap[ws.url] = {
               status: normalizedStatus,
-              lastChecked: ws.checked_at,
-              error: ws.error
+              lastChecked: lastCheckedValue,
+              error: ws.error || null
             }
-            console.log(`[FRONTEND DEBUG]   → Updated ${ws.name} status to: ${normalizedStatus}`)
+            console.log(`[FRONTEND DEBUG]   → Updated ${ws.name}:`, {
+              from: oldStatus,
+              to: statusMap[ws.url]
+            })
           } else {
             // Website not in current list but has status
             statusMap[ws.url] = {
               status: normalizedStatus,
-              lastChecked: ws.checked_at,
-              error: ws.error
+              lastChecked: lastCheckedValue,
+              error: ws.error || null
             }
             console.log(`[FRONTEND DEBUG]   → Added new website ${ws.name} with status: ${normalizedStatus}`)
           }
         })
 
-        console.log('[FRONTEND DEBUG] Final statusMap:', statusMap)
+        console.log('[FRONTEND DEBUG] ========== FINAL STATUS MAP ==========')
+        console.log('[FRONTEND DEBUG] Final statusMap:', JSON.stringify(statusMap, null, 2))
+        console.log('[FRONTEND DEBUG] Status map keys:', Object.keys(statusMap))
+        console.log('[FRONTEND DEBUG] Status map entries:')
+        Object.entries(statusMap).forEach(([url, status]) => {
+          console.log(`[FRONTEND DEBUG]   ${url}:`, status)
+        })
+
+        console.log('[FRONTEND DEBUG] Calling setWebsiteStatuses()...')
         setWebsiteStatuses(statusMap)
         console.log('[FRONTEND DEBUG] Status map set in state')
+        console.log('[FRONTEND DEBUG] ========== loadStatuses COMPLETED ==========')
       } else {
-        console.log('[FRONTEND DEBUG] API response not successful or no websiteStatuses')
-        console.log('[FRONTEND DEBUG] Response:', data)
+        console.error('[FRONTEND DEBUG] ========== INVALID RESPONSE ==========')
+        console.error('[FRONTEND DEBUG] API response not successful or no websiteStatuses')
+        console.error('[FRONTEND DEBUG] Response structure:', {
+          hasData: !!data,
+          hasSuccess: !!data?.success,
+          successValue: data?.success,
+          hasWebsiteStatuses: !!data?.websiteStatuses,
+          websiteStatusesType: typeof data?.websiteStatuses,
+          websiteStatusesIsArray: Array.isArray(data?.websiteStatuses),
+          fullResponse: data
+        })
+
         // If API fails, initialize all as UNKNOWN
         const statusMap = {}
         websites.forEach(w => {
@@ -138,14 +188,20 @@ export default function Dashboard() {
           }
         })
         setWebsiteStatuses(statusMap)
+        console.log('[FRONTEND DEBUG] Initialized all as UNKNOWN due to invalid response')
       }
     } catch (error) {
-      console.error('[FRONTEND DEBUG] ERROR loading statuses:', error)
-      console.error('[FRONTEND DEBUG] Error details:', {
-        message: error.message,
-        response: error.response?.data,
-        stack: error.stack
-      })
+      console.error('[FRONTEND DEBUG] ========== ERROR IN loadStatuses ==========')
+      console.error('[FRONTEND DEBUG] Error type:', error.constructor.name)
+      console.error('[FRONTEND DEBUG] Error message:', error.message)
+      console.error('[FRONTEND DEBUG] Error stack:', error.stack)
+      console.error('[FRONTEND DEBUG] Error response:', error.response)
+      if (error.response) {
+        console.error('[FRONTEND DEBUG] Response status:', error.response.status)
+        console.error('[FRONTEND DEBUG] Response data:', error.response.data)
+        console.error('[FRONTEND DEBUG] Response headers:', error.response.headers)
+      }
+
       // Fallback: Initialize all as UNKNOWN
       const statusMap = {}
       websites.forEach(w => {
@@ -156,10 +212,13 @@ export default function Dashboard() {
         }
       })
       setWebsiteStatuses(statusMap)
+      console.log('[FRONTEND DEBUG] Initialized all as UNKNOWN due to error')
 
       // Try fallback to down websites only
       try {
+        console.log('[FRONTEND DEBUG] Trying fallback: getDownWebsites()...')
         const downData = await getDownWebsites()
+        console.log('[FRONTEND DEBUG] Down websites response:', downData)
         if (downData.success && downData.downWebsites) {
           downData.downWebsites.forEach(down => {
             if (statusMap[down.url]) {
@@ -171,9 +230,10 @@ export default function Dashboard() {
             }
           })
           setWebsiteStatuses(statusMap)
+          console.log('[FRONTEND DEBUG] Updated statuses from down websites')
         }
       } catch (fallbackError) {
-        console.error('Error loading down websites:', fallbackError)
+        console.error('[FRONTEND DEBUG] Fallback error:', fallbackError)
       }
     }
   }
@@ -344,6 +404,12 @@ export default function Dashboard() {
                           <div className="text-sm text-gray-500">
                             {lastChecked ? new Date(lastChecked).toLocaleString() : 'Never'}
                           </div>
+                          {/* Debug info */}
+                          {process.env.NODE_ENV === 'development' && (
+                            <div className="text-xs text-gray-400 mt-1">
+                              Debug: {JSON.stringify({ status, lastChecked })}
+                            </div>
+                          )}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-center">
                           <Button
@@ -389,6 +455,12 @@ export default function Dashboard() {
                         <p className="text-sm text-gray-600">
                           {lastChecked ? new Date(lastChecked).toLocaleString() : 'Never'}
                         </p>
+                        {/* Debug info */}
+                        {process.env.NODE_ENV === 'development' && (
+                          <p className="text-xs text-gray-400 mt-1">
+                            Debug: status={status}, lastChecked={lastChecked ? 'exists' : 'null'}
+                          </p>
+                        )}
                       </div>
                     </div>
                     <Button

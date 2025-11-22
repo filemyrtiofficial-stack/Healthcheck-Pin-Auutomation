@@ -326,34 +326,58 @@ app.get('/website/check', async (req, res) => {
 
 // Helper function to get latest statuses for all websites
 function getLatestStatuses() {
+  logger.info('[getLatestStatuses] ========== START ==========');
+
   // Use the same path resolution as database.js
   const { getStatusFilePath } = require('./src/utils/database');
   const statusFile = getStatusFilePath();
+  logger.info(`[getLatestStatuses] Status file path: ${statusFile}`);
+  logger.info(`[getLatestStatuses] Status file exists: ${fs.existsSync(statusFile)}`);
+
   let statuses = [];
 
   if (fs.existsSync(statusFile)) {
     try {
       const data = fs.readFileSync(statusFile, 'utf8');
+      logger.info(`[getLatestStatuses] File size: ${data.length} bytes`);
       statuses = JSON.parse(data);
-      logger.debug(`Loaded ${statuses.length} status entries from file: ${statusFile}`);
+      logger.info(`[getLatestStatuses] Loaded ${statuses.length} status entries from file`);
+      logger.info(`[getLatestStatuses] Statuses is array: ${Array.isArray(statuses)}`);
+
+      // Log first few entries for debugging
+      if (statuses.length > 0) {
+        logger.info(`[getLatestStatuses] First 3 entries:`, JSON.stringify(statuses.slice(0, 3), null, 2));
+      }
+
       // Ensure statuses is an array
       if (!Array.isArray(statuses)) {
-        logger.warn('Status file is not an array, resetting to empty array');
+        logger.warn('[getLatestStatuses] Status file is not an array, resetting to empty array');
         statuses = [];
       }
     } catch (error) {
-      logger.error(`Error reading status file ${statusFile}: ${error.message}`, error);
+      logger.error(`[getLatestStatuses] Error reading status file: ${error.message}`, error);
+      logger.error(`[getLatestStatuses] Error stack:`, error.stack);
       statuses = [];
     }
   } else {
-    logger.debug(`Status file not found at: ${statusFile}. No status data available.`);
+    logger.warn(`[getLatestStatuses] Status file not found at: ${statusFile}. No status data available.`);
   }
 
   const websites = loadWebsites();
+  logger.info(`[getLatestStatuses] Loaded ${websites.length} websites from config`);
+  logger.info(`[getLatestStatuses] Website URLs:`, websites.map(w => w.url));
+
   const latestStatuses = {};
 
-  statuses.forEach((status) => {
+  statuses.forEach((status, index) => {
     if (status && status.url) {
+      logger.debug(`[getLatestStatuses] Processing status entry ${index + 1}:`, {
+        url: status.url,
+        status: status.status,
+        error: status.error,
+        checked_at: status.checked_at
+      });
+
       // Include status even if checked_at is missing (for backward compatibility)
       const existingStatus = latestStatuses[status.url];
       const statusCheckedAt = status.checked_at || new Date().toISOString(); // Default to now if missing
@@ -365,27 +389,82 @@ function getLatestStatuses() {
           ...status,
           checked_at: status.checked_at || statusCheckedAt
         };
+        logger.debug(`[getLatestStatuses] Added/updated status for ${status.url}`);
+      } else {
+        logger.debug(`[getLatestStatuses] Skipped older status for ${status.url}`);
       }
+    } else {
+      logger.debug(`[getLatestStatuses] Skipped invalid status entry ${index + 1}:`, status);
     }
   });
 
-  logger.debug(`Processed ${Object.keys(latestStatuses).length} unique website statuses from ${statuses.length} total entries`);
+  logger.info(`[getLatestStatuses] ========== RESULT ==========`);
+  logger.info(`[getLatestStatuses] Total status entries processed: ${statuses.length}`);
+  logger.info(`[getLatestStatuses] Unique website statuses: ${Object.keys(latestStatuses).length}`);
+  logger.info(`[getLatestStatuses] Latest status URLs:`, Object.keys(latestStatuses));
+  logger.info(`[getLatestStatuses] Latest statuses sample:`, JSON.stringify(
+    Object.entries(latestStatuses).slice(0, 3).map(([url, status]) => ({
+      url,
+      status: status.status,
+      checked_at: status.checked_at
+    })),
+    null,
+    2
+  ));
+
   return { websites, latestStatuses };
 }
+
+// Debug endpoint to check status file directly
+app.get('/api/debug/status-file', (req, res) => {
+  try {
+    const { getStatusFilePath } = require('./src/utils/database');
+    const statusFile = getStatusFilePath();
+    const exists = fs.existsSync(statusFile);
+
+    let fileInfo = {
+      path: statusFile,
+      exists: exists,
+      size: exists ? fs.statSync(statusFile).size : 0,
+      entries: 0,
+      sample: null
+    };
+
+    if (exists) {
+      try {
+        const data = fs.readFileSync(statusFile, 'utf8');
+        const statuses = JSON.parse(data);
+        fileInfo.entries = Array.isArray(statuses) ? statuses.length : 0;
+        fileInfo.sample = Array.isArray(statuses) && statuses.length > 0 ? statuses.slice(0, 3) : null;
+      } catch (error) {
+        fileInfo.error = error.message;
+      }
+    }
+
+    res.json({ success: true, fileInfo });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
 
 // Get all website statuses (latest status for each website)
 app.get('/api/website-statuses', (req, res) => {
   try {
+    logger.info('[API /website-statuses] ========== REQUEST RECEIVED ==========');
     const { websites, latestStatuses } = getLatestStatuses();
 
-    logger.debug(`[API] Fetching statuses for ${websites.length} websites`);
-    logger.debug(`[API] Found ${Object.keys(latestStatuses).length} status entries`);
+    logger.info(`[API /website-statuses] Websites to process: ${websites.length}`);
+    logger.info(`[API /website-statuses] Status entries found: ${Object.keys(latestStatuses).length}`);
+
+    // Log all website URLs
+    logger.info(`[API /website-statuses] Website URLs:`, websites.map(w => w.url));
+    logger.info(`[API /website-statuses] Status entry URLs:`, Object.keys(latestStatuses));
 
     const websiteStatuses = websites.map(website => {
       const status = latestStatuses[website.url];
 
       if (!status) {
-        logger.debug(`[API] No status found for ${website.name} (${website.url})`);
+        logger.debug(`[API /website-statuses] No status found for ${website.name} (${website.url})`);
         return {
           name: website.name,
           url: website.url,
@@ -395,6 +474,12 @@ app.get('/api/website-statuses', (req, res) => {
           checked_at: null
         };
       }
+
+      logger.debug(`[API /website-statuses] Processing ${website.name}:`, {
+        rawStatus: status.status,
+        error: status.error,
+        checked_at: status.checked_at
+      });
 
       // Determine status: UP only if status code is 200-399
       // DOWN if there's an error OR status code is 4xx/5xx
@@ -445,16 +530,30 @@ app.get('/api/website-statuses', (req, res) => {
         checked_at: status.checked_at || null
       };
 
-      logger.debug(`[API] Status for ${website.name}: ${websiteStatus}, checked_at: ${result.checked_at}`);
+      logger.info(`[API /website-statuses] ${website.name}: status=${websiteStatus}, checked_at=${result.checked_at}`);
       return result;
     });
 
-    logger.info(`[API /website-statuses] Returning ${websiteStatuses.length} website statuses. Statuses found: ${Object.keys(latestStatuses).length}`);
-    logger.debug(`[API /website-statuses] Sample response:`, websiteStatuses.slice(0, 2));
+    logger.info(`[API /website-statuses] ========== RESPONSE SENT ==========`);
+    logger.info(`[API /website-statuses] Total websites: ${websiteStatuses.length}`);
+    logger.info(`[API /website-statuses] Response sample (first 3):`, JSON.stringify(websiteStatuses.slice(0, 3), null, 2));
 
-    res.json({ success: true, websiteStatuses });
+    const response = { success: true, websiteStatuses };
+    logger.info(`[API /website-statuses] Response structure:`, {
+      success: response.success,
+      websiteStatusesCount: response.websiteStatuses.length,
+      firstWebsite: response.websiteStatuses[0] ? {
+        name: response.websiteStatuses[0].name,
+        url: response.websiteStatuses[0].url,
+        status: response.websiteStatuses[0].status,
+        checked_at: response.websiteStatuses[0].checked_at
+      } : null
+    });
+
+    res.json(response);
   } catch (error) {
-    logger.error(`Error fetching website statuses: ${error.message}`, error);
+    logger.error(`[API /website-statuses] ERROR: ${error.message}`, error);
+    logger.error(`[API /website-statuses] Stack:`, error.stack);
     res.status(500).json({ success: false, error: 'Internal server error' });
   }
 });
