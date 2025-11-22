@@ -50,34 +50,6 @@ function setupSecurityMiddleware(app) {
 /**
  * CORS configuration
  */
-function setupCORS(app) {
-  const cors = require('cors');
-  const corsOrigin = process.env.CORS_ORIGIN || '*';
-  const allowedOrigins = corsOrigin !== '*'
-    ? corsOrigin.split(',').map(origin => origin.trim())
-    : ['*'];
-
-  const corsOptions = {
-    origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
-    exposedHeaders: ['Content-Length', 'Content-Type'],
-    credentials: true,
-    optionsSuccessStatus: 200,
-    maxAge: 86400 // 24 hours
-  };
-
-  app.use(corsOrigin === '*' ? cors(corsOptions) : cors(corsOptions));
-}
 
 module.exports = {
   setupSecurityMiddleware,

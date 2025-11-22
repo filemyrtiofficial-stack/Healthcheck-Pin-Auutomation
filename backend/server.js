@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const { checkWebsites } = require('./src/checker/websiteChecker');
 const whatsappService = require('./src/whatsapp/whatsappService');
-const { generateSocialMediaPost, generateConsolidatedWhatsAppMessage } = require('./src/postGenerator/postGenerator');
+const { generateSocialMediaPost, generateConsolidatedWhatsAppMessage, generateIndividualWhatsAppMessage } = require('./src/postGenerator/postGenerator');
 const { saveStatus, getLastPostTime, savePostLog } = require('./src/utils/database');
 const { logger } = require('./src/utils/logger');
 const { validateEnvironment } = require('./src/utils/envValidator');
@@ -284,14 +284,37 @@ app.get('/website/check', async (req, res) => {
       });
     }
 
-    // Send consolidated WhatsApp message with all down websites
+    // Send individual WhatsApp messages with screenshots for each down website
     if (downWebsites.length > 0 && whatsappReady && whatsappContact) {
       try {
-        logger.info(`Sending consolidated WhatsApp notification for ${downWebsites.length} down website(s)...`);
-        const consolidatedMessage = generateConsolidatedWhatsAppMessage(downWebsites);
-        // Send message without screenshot (consolidated message doesn't need individual screenshots)
-        await whatsappService.sendMessage(consolidatedMessage);
-        logger.info(`Consolidated WhatsApp notification sent successfully!`);
+        logger.info(`Sending individual WhatsApp notifications for ${downWebsites.length} down website(s)...`);
+
+        // Send individual message with screenshot for each down website
+        for (const downWebsite of downWebsites) {
+          const { website, status, error, screenshot } = downWebsite;
+
+          try {
+            // Generate individual message for this website
+            const message = generateIndividualWhatsAppMessage(website, status, error, screenshot);
+
+            // Send message with screenshot if available
+            if (screenshot) {
+              await whatsappService.sendMessage(message, screenshot);
+              logger.info(`WhatsApp notification with screenshot sent for ${website.name}`);
+            } else {
+              await whatsappService.sendMessage(message);
+              logger.info(`WhatsApp notification sent for ${website.name} (no screenshot available)`);
+            }
+
+            // Add a small delay between messages to avoid rate limiting
+            await new Promise(resolve => setTimeout(resolve, 2000));
+          } catch (websiteError) {
+            logger.error(`Error sending WhatsApp for ${website.name}: ${websiteError.message}`);
+            // Continue with next website even if one fails
+          }
+        }
+
+        logger.info(`All WhatsApp notifications sent successfully!`);
       } catch (whatsappError) {
         logger.error(`WhatsApp error: ${whatsappError.message}`);
       }
@@ -552,14 +575,37 @@ app.post('/api/check-now', async (req, res) => {
       });
     }
 
-    // Send consolidated WhatsApp message with all down websites
+    // Send individual WhatsApp messages with screenshots for each down website
     if (downWebsites.length > 0 && whatsappReady && whatsappContact) {
       try {
-        logger.info(`Sending consolidated WhatsApp notification for ${downWebsites.length} down website(s)...`);
-        const consolidatedMessage = generateConsolidatedWhatsAppMessage(downWebsites);
-        // Send message without screenshot (consolidated message doesn't need individual screenshots)
-        await whatsappService.sendMessage(consolidatedMessage);
-        logger.info(`Consolidated WhatsApp notification sent successfully!`);
+        logger.info(`Sending individual WhatsApp notifications for ${downWebsites.length} down website(s)...`);
+
+        // Send individual message with screenshot for each down website
+        for (const downWebsite of downWebsites) {
+          const { website, status, error, screenshot } = downWebsite;
+
+          try {
+            // Generate individual message for this website
+            const message = generateIndividualWhatsAppMessage(website, status, error, screenshot);
+
+            // Send message with screenshot if available
+            if (screenshot) {
+              await whatsappService.sendMessage(message, screenshot);
+              logger.info(`WhatsApp notification with screenshot sent for ${website.name}`);
+            } else {
+              await whatsappService.sendMessage(message);
+              logger.info(`WhatsApp notification sent for ${website.name} (no screenshot available)`);
+            }
+
+            // Add a small delay between messages to avoid rate limiting
+            await new Promise(resolve => setTimeout(resolve, 2000));
+          } catch (websiteError) {
+            logger.error(`Error sending WhatsApp for ${website.name}: ${websiteError.message}`);
+            // Continue with next website even if one fails
+          }
+        }
+
+        logger.info(`All WhatsApp notifications sent successfully!`);
       } catch (whatsappError) {
         logger.error(`WhatsApp error: ${whatsappError.message}`);
       }

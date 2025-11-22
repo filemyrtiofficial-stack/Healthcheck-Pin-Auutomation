@@ -15,7 +15,12 @@ const templates = {
 
 {{SCREENSHOT}}
 
-⚠️ Official portal seems down. You can temporarily use our private RTI filing portal 👉 *https://filemyrti.com*
+⚠️ *This website is not working*
+
+You can use this alternative website which is ours:
+👉 *{{ALTERNATIVE_URL}}*
+
+This portal is currently not accessible. Citizens cannot submit RTI applications. Immediate attention required!
 
 #RTI #RightToInformation #GovernmentTransparency`,
 
@@ -28,7 +33,12 @@ const templates = {
 
 {{SCREENSHOT}}
 
-⚠️ Official portal seems down. You can temporarily use our private RTI filing portal 👉 https://filemyrti.com
+⚠️ This website is not working
+
+You can use this alternative website which is ours:
+👉 {{ALTERNATIVE_URL}}
+
+This portal is currently not accessible. Citizens cannot submit RTI applications. Immediate attention required!
 
 #RTI #RightToInformation #GovernmentTransparency`
   },
@@ -51,7 +61,10 @@ const templates = {
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-⚠️ Official portal seems down. You can temporarily use our private RTI filing portal 👉 https://filemyrti.com
+⚠️ This website is not working
+
+You can use this alternative website which is ours:
+👉 {{ALTERNATIVE_URL}}
 
 This affects citizens trying to file RTI applications. Please check and fix urgently!
 
@@ -75,7 +88,10 @@ This affects citizens trying to file RTI applications. Please check and fix urge
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-⚠️ Official portal seems down. You can temporarily use our private RTI filing portal 👉 https://filemyrti.com
+⚠️ This website is not working
+
+You can use this alternative website which is ours:
+👉 {{ALTERNATIVE_URL}}
 
 This affects citizens trying to file RTI applications. Please check and fix urgently!
 
@@ -102,7 +118,10 @@ This affects citizens trying to file RTI applications. Please check and fix urge
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-⚠️ Official portal seems down. You can temporarily use our private RTI filing portal 👉 https://filemyrti.com
+⚠️ This website is not working
+
+You can use this alternative website which is ours:
+👉 {{ALTERNATIVE_URL}}
 
 This affects citizens trying to file RTI applications. Please check and fix urgently!
 

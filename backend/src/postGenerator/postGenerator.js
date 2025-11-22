@@ -68,13 +68,60 @@ function generateSocialMediaPost(website, status, error, screenshotPath = null, 
     template = socialMediaTemplates.long.linkedin;
   }
 
+  // Get alternative website URL from environment or use default
+  const alternativeWebsite = process.env.ALTERNATIVE_WEBSITE_URL || 'https://filemyrti.com';
+
   // Replace placeholders
   let message = template
     .replace(/{{WEBSITE_NAME}}/g, website.name)
     .replace(/{{URL}}/g, website.url)
     .replace(/{{STATUS}}/g, error || status || 'DOWN')
     .replace(/{{TIME}}/g, timeString)
-    .replace(/{{SCREENSHOT}}/g, screenshotPlaceholder);
+    .replace(/{{SCREENSHOT}}/g, screenshotPlaceholder)
+    .replace(/{{ALTERNATIVE_URL}}/g, alternativeWebsite);
+
+  return message;
+}
+
+/**
+ * Generate individual WhatsApp message for a single down website with screenshot
+ * @param {Object} website - Website object with name and url
+ * @param {string} status - Status code or null
+ * @param {string} error - Error message
+ * @param {string} screenshotPath - Path to screenshot (optional)
+ * @returns {string} - Formatted WhatsApp message
+ */
+function generateIndividualWhatsAppMessage(website, status, error, screenshotPath = null) {
+  const now = new Date();
+  const timeString = now.toLocaleString('en-IN', {
+    timeZone: 'Asia/Kolkata',
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+
+  // Get alternative website URL from environment or use default
+  const alternativeWebsite = process.env.ALTERNATIVE_WEBSITE_URL || 'https://filemyrti.com';
+
+  let message = `🚨 *RTI Portal DOWN Alert*\n\n`;
+  message += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  message += `📋 *Website:* ${website.name}\n`;
+  message += `🔗 *URL:* ${website.url}\n`;
+  message += `❌ *Status:* ${error || status || 'DOWN'}\n`;
+  message += `⏰ *Checked:* ${timeString}\n\n`;
+
+  if (screenshotPath) {
+    message += `📸 *Screenshot attached below*\n\n`;
+  }
+
+  message += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  message += `⚠️ *This website is not working*\n\n`;
+  message += `You can use this alternative website which is ours:\n`;
+  message += `👉 *${alternativeWebsite}*\n\n`;
+  message += `This portal is currently not accessible. Citizens cannot submit RTI applications. Immediate attention required!\n\n`;
+  message += `#RTI #RightToInformation #GovernmentTransparency`;
 
   return message;
 }
@@ -142,6 +189,7 @@ function getAllFormats(website, status, error, screenshotPath = null) {
 module.exports = {
   generatePost,
   generateSocialMediaPost,
+  generateIndividualWhatsAppMessage,
   generateConsolidatedWhatsAppMessage,
   getAllFormats
 };
