@@ -357,10 +357,18 @@ function getLatestStatuses() {
   const latestStatuses = {};
 
   statuses.forEach((status) => {
-    if (status && status.url && status.checked_at) {
+    if (status && status.url) {
+      // Include status even if checked_at is missing (for backward compatibility)
       const existingStatus = latestStatuses[status.url];
-      if (!existingStatus || new Date(status.checked_at) > new Date(existingStatus.checked_at)) {
-        latestStatuses[status.url] = status;
+      const statusCheckedAt = status.checked_at || new Date().toISOString(); // Default to now if missing
+      const existingCheckedAt = existingStatus?.checked_at || new Date(0).toISOString();
+
+      if (!existingStatus || new Date(statusCheckedAt) > new Date(existingCheckedAt)) {
+        // Ensure checked_at exists
+        latestStatuses[status.url] = {
+          ...status,
+          checked_at: status.checked_at || statusCheckedAt
+        };
       }
     }
   });
@@ -373,10 +381,14 @@ app.get('/api/website-statuses', (req, res) => {
   try {
     const { websites, latestStatuses } = getLatestStatuses();
 
+    logger.debug(`[API] Fetching statuses for ${websites.length} websites`);
+    logger.debug(`[API] Found ${Object.keys(latestStatuses).length} status entries`);
+
     const websiteStatuses = websites.map(website => {
       const status = latestStatuses[website.url];
 
       if (!status) {
+        logger.debug(`[API] No status found for ${website.name} (${website.url})`);
         return {
           name: website.name,
           url: website.url,
@@ -427,16 +439,20 @@ app.get('/api/website-statuses', (req, res) => {
         // Otherwise it stays UNKNOWN (no check performed yet)
       }
 
-      return {
+      const result = {
         name: website.name,
         url: website.url,
         status: websiteStatus,
         statusCode: status.status,
         error: status.error,
-        checked_at: status.checked_at
+        checked_at: status.checked_at || null
       };
+
+      logger.debug(`[API] Status for ${website.name}: ${websiteStatus}, checked_at: ${result.checked_at}`);
+      return result;
     });
 
+    logger.debug(`[API] Returning ${websiteStatuses.length} website statuses`);
     res.json({ success: true, websiteStatuses });
   } catch (error) {
     logger.error(`Error fetching website statuses: ${error.message}`, error);
