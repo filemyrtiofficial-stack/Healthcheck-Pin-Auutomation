@@ -813,37 +813,37 @@ app.get('/api/down-websites', (req, res) => {
 
 // Serve static files - prefer dist (built) folder, fallback to frontend (dev)
 // This must come AFTER all API routes
+// IMPORTANT: Only serve static files for non-API routes
 const frontendDist = path.join(__dirname, '../frontend/dist');
 const frontendSrc = path.join(__dirname, '../frontend');
 
-if (fs.existsSync(frontendDist)) {
-  app.use(express.static(frontendDist));
-} else {
-  // For development: serve source files with proper MIME types
-  app.use((req, res, next) => {
-    // Set correct MIME type for JSX files
-    if (req.path.endsWith('.jsx')) {
-      res.type('application/javascript');
+// Middleware to serve static files only for non-API routes
+app.use((req, res, next) => {
+  // Skip API routes and website routes - let them be handled by their specific routes
+  if (req.path.startsWith('/api/') || req.path.startsWith('/website/') || req.path.startsWith('/health')) {
+    return next();
+  }
+
+  // For static assets (JS, CSS, images, etc.)
+  if (req.path.match(/\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$/)) {
+    if (fs.existsSync(frontendDist)) {
+      return express.static(frontendDist)(req, res, next);
+    } else {
+      return express.static(frontendSrc)(req, res, next);
     }
-    // Set correct MIME type for JS files
-    if (req.path.endsWith('.js')) {
-      res.type('application/javascript');
-    }
-    // Set correct MIME type for TSX files
-    if (req.path.endsWith('.tsx')) {
-      res.type('application/javascript');
-    }
-    // Set correct MIME type for TS files
-    if (req.path.endsWith('.ts')) {
-      res.type('application/javascript');
-    }
-    next();
-  }, express.static(frontendSrc));
-}
+  }
+
+  next();
+});
 
 // Serve frontend - prefer dist, fallback to source
-// This catch-all must be LAST
+// This catch-all must be LAST and only for non-API routes
 app.get('*', (req, res) => {
+  // Double check - never serve HTML for API routes
+  if (req.path.startsWith('/api/') || req.path.startsWith('/website/') || req.path.startsWith('/health')) {
+    return res.status(404).json({ success: false, error: 'API endpoint not found' });
+  }
+
   const distIndex = path.join(__dirname, '../frontend/dist/index.html');
   const srcIndex = path.join(__dirname, '../frontend/index.html');
 
