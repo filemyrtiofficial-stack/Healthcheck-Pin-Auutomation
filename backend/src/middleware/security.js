@@ -68,11 +68,15 @@ function setupCORS(app) {
         callback(new Error('Not allowed by CORS'));
       }
     },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+    exposedHeaders: ['Content-Length', 'Content-Type'],
     credentials: true,
-    optionsSuccessStatus: 200
+    optionsSuccessStatus: 200,
+    maxAge: 86400 // 24 hours
   };
 
-  app.use(corsOrigin === '*' ? cors() : cors(corsOptions));
+  app.use(corsOrigin === '*' ? cors(corsOptions) : cors(corsOptions));
 }
 
 module.exports = {

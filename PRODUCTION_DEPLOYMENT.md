@@ -162,6 +162,8 @@ server {
     add_header X-XSS-Protection "1; mode=block" always;
 
     # Proxy to Node.js app
+    # Note: Nginx allows all HTTP methods (GET, POST, PUT, DELETE, etc.) by default
+    # CORS is handled by the Express.js backend middleware
     location / {
         proxy_pass http://localhost:3000;
         proxy_http_version 1.1;
@@ -172,6 +174,9 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_cache_bypass $http_upgrade;
+        
+        # Important: Do NOT use limit_except here as it would block POST, PUT, DELETE
+        # Nginx allows all HTTP methods by default, which is what we want
     }
 
     # Increase timeout for long-running requests
