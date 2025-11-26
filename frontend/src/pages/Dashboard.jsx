@@ -113,12 +113,24 @@ export default function Dashboard() {
         console.log('[FRONTEND DEBUG] websiteStatuses length:', data.websiteStatuses.length)
       }
 
-      if (data && data.success && data.websiteStatuses && Array.isArray(data.websiteStatuses)) {
+      // More lenient check - try to handle response even if structure is slightly different
+      let websiteStatusesArray = null
+      if (data && data.websiteStatuses && Array.isArray(data.websiteStatuses)) {
+        websiteStatusesArray = data.websiteStatuses
+      } else if (data && Array.isArray(data)) {
+        // Handle case where API returns array directly
+        websiteStatusesArray = data
+      } else if (data && data.data && Array.isArray(data.data)) {
+        // Handle nested data structure
+        websiteStatusesArray = data.data
+      }
+
+      if (websiteStatusesArray && Array.isArray(websiteStatusesArray) && websiteStatusesArray.length > 0) {
         console.log('[FRONTEND DEBUG] ========== PROCESSING VALID RESPONSE ==========')
-        console.log('[FRONTEND DEBUG] Received', data.websiteStatuses.length, 'statuses from API')
+        console.log('[FRONTEND DEBUG] Received', websiteStatusesArray.length, 'statuses from API')
 
         // Log each status entry in detail
-        data.websiteStatuses.forEach((ws, index) => {
+        websiteStatusesArray.forEach((ws, index) => {
           console.log(`[FRONTEND DEBUG] Status ${index + 1}:`, {
             name: ws.name,
             url: ws.url,
@@ -144,8 +156,8 @@ export default function Dashboard() {
         })
 
         // Then update with actual statuses from API
-        data.websiteStatuses.forEach((ws, index) => {
-          console.log(`[FRONTEND DEBUG] ========== Processing status ${index + 1}/${data.websiteStatuses.length} ==========`)
+        websiteStatusesArray.forEach((ws, index) => {
+          console.log(`[FRONTEND DEBUG] ========== Processing status ${index + 1}/${websiteStatusesArray.length} ==========`)
           console.log(`[FRONTEND DEBUG] Website: ${ws.name} (${ws.url})`)
           console.log(`[FRONTEND DEBUG] Raw data:`, {
             status: ws.status,
@@ -222,6 +234,14 @@ export default function Dashboard() {
         })
         console.error('[FRONTEND DEBUG] Full response JSON:', JSON.stringify(data, null, 2))
         console.error('[FRONTEND DEBUG] Response keys:', data ? Object.keys(data) : 'data is null/undefined')
+        console.error('[FRONTEND DEBUG] websiteStatusesArray result:', websiteStatusesArray)
+        console.error('[FRONTEND DEBUG] Attempted to extract array but failed. Data structure:', {
+          isDataArray: Array.isArray(data),
+          hasDataProperty: !!data?.data,
+          isDataPropertyArray: Array.isArray(data?.data),
+          hasWebsiteStatuses: !!data?.websiteStatuses,
+          isWebsiteStatusesArray: Array.isArray(data?.websiteStatuses)
+        })
 
         // If API fails, initialize all as UNKNOWN
         const statusMap = {}
