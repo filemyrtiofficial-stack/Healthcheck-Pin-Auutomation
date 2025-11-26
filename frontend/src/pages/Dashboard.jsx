@@ -77,6 +77,9 @@ export default function Dashboard() {
       const data = await getWebsiteStatuses()
 
       console.log('[FRONTEND DEBUG] ========== API RESPONSE RECEIVED ==========')
+      console.log('[FRONTEND DEBUG] Data type:', typeof data)
+      console.log('[FRONTEND DEBUG] Data is null:', data === null)
+      console.log('[FRONTEND DEBUG] Data is undefined:', data === undefined)
       console.log('[FRONTEND DEBUG] Full API response:', JSON.stringify(data, null, 2))
 
       // Check if we have websiteStatuses array
@@ -98,6 +101,13 @@ export default function Dashboard() {
       console.log('[FRONTEND DEBUG] Response has websiteStatuses:', !!data?.websiteStatuses)
       console.log('[FRONTEND DEBUG] websiteStatuses type:', typeof data?.websiteStatuses)
       console.log('[FRONTEND DEBUG] websiteStatuses is array:', Array.isArray(data?.websiteStatuses))
+      console.log('[FRONTEND DEBUG] Validation check:', {
+        hasData: !!data,
+        hasSuccess: data?.success === true,
+        hasWebsiteStatuses: !!data?.websiteStatuses,
+        isArray: Array.isArray(data?.websiteStatuses),
+        allConditions: !!(data && data.success && data.websiteStatuses && Array.isArray(data.websiteStatuses))
+      })
 
       if (data?.websiteStatuses) {
         console.log('[FRONTEND DEBUG] websiteStatuses length:', data.websiteStatuses.length)
@@ -210,6 +220,8 @@ export default function Dashboard() {
           websiteStatusesIsArray: Array.isArray(data?.websiteStatuses),
           fullResponse: data
         })
+        console.error('[FRONTEND DEBUG] Full response JSON:', JSON.stringify(data, null, 2))
+        console.error('[FRONTEND DEBUG] Response keys:', data ? Object.keys(data) : 'data is null/undefined')
 
         // If API fails, initialize all as UNKNOWN
         const statusMap = {}
