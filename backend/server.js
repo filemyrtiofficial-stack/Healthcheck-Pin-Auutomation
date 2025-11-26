@@ -339,6 +339,13 @@ app.get('/website/check', async (req, res) => {
 });
 
 // Helper function to get latest statuses for all websites
+// Helper function to normalize URLs for comparison
+function normalizeUrl(url) {
+  if (!url) return '';
+  // Remove trailing slash, convert to lowercase, trim whitespace
+  return String(url).trim().toLowerCase().replace(/\/+$/, '');
+}
+
 function getLatestStatuses() {
   logger.info('[getLatestStatuses] ========== START ==========');
 
@@ -385,8 +392,10 @@ function getLatestStatuses() {
 
   statuses.forEach((status, index) => {
     if (status && status.url) {
+      const normalizedUrl = normalizeUrl(status.url);
       logger.debug(`[getLatestStatuses] Processing status entry ${index + 1}:`, {
-        url: status.url,
+        originalUrl: status.url,
+        normalizedUrl: normalizedUrl,
         status: status.status,
         error: status.error,
         checked_at: status.checked_at,
@@ -394,7 +403,8 @@ function getLatestStatuses() {
       });
 
       // Include status even if checked_at is missing (for backward compatibility)
-      const existingStatus = latestStatuses[status.url];
+      // Use normalized URL as key for matching
+      const existingStatus = latestStatuses[normalizedUrl];
       const statusCheckedAt = status.checked_at || new Date().toISOString(); // Default to now if missing
       const existingCheckedAt = existingStatus?.checked_at || new Date(0).toISOString();
 
@@ -420,13 +430,15 @@ function getLatestStatuses() {
           ? status.checked_at
           : statusCheckedAt;
 
-        latestStatuses[status.url] = {
+        // Store with normalized URL as key, but keep original URL in the data
+        latestStatuses[normalizedUrl] = {
           ...status,
+          url: status.url, // Keep original URL
           checked_at: finalCheckedAt
         };
-        logger.info(`[getLatestStatuses] Added/updated status for ${status.url} with checked_at: ${finalCheckedAt}`);
+        logger.info(`[getLatestStatuses] Added/updated status for ${normalizedUrl} (original: ${status.url}) with checked_at: ${finalCheckedAt}`);
       } else {
-        logger.debug(`[getLatestStatuses] Skipped older status for ${status.url}`);
+        logger.debug(`[getLatestStatuses] Skipped older status for ${normalizedUrl} (original: ${status.url})`);
       }
     } else {
       logger.debug(`[getLatestStatuses] Skipped invalid status entry ${index + 1}:`, status);
@@ -436,16 +448,43 @@ function getLatestStatuses() {
   logger.info(`[getLatestStatuses] ========== RESULT ==========`);
   logger.info(`[getLatestStatuses] Total status entries processed: ${statuses.length}`);
   logger.info(`[getLatestStatuses] Unique website statuses: ${Object.keys(latestStatuses).length}`);
-  logger.info(`[getLatestStatuses] Latest status URLs:`, Object.keys(latestStatuses));
+  logger.info(`[getLatestStatuses] Latest status URLs (normalized keys):`, Object.keys(latestStatuses));
+
+  // Log detailed sample with both normalized key and original URL
   logger.info(`[getLatestStatuses] Latest statuses sample:`, JSON.stringify(
-    Object.entries(latestStatuses).slice(0, 3).map(([url, status]) => ({
-      url,
+    Object.entries(latestStatuses).slice(0, 5).map(([normalizedUrl, status]) => ({
+      normalizedKey: normalizedUrl,
+      originalUrl: status.url,
       status: status.status,
-      checked_at: status.checked_at
+      checked_at: status.checked_at,
+      error: status.error
     })),
     null,
     2
   ));
+
+  // Check for specific URLs the user mentioned
+  const testUrls = [
+    'https://rtiportal.kerala.gov.in/',
+    'https://rtionline.cg.gov.in/',
+    'https://rtionline.goa.gov.in/',
+    'https://rtionline.haryana.gov.in/',
+    'https://rtionline.mizoram.gov.in/',
+    'https://rtionline.odisha.gov.in/'
+  ];
+
+  logger.info(`[getLatestStatuses] ========== TEST URL MATCHING ==========`);
+  testUrls.forEach(testUrl => {
+    const normalized = normalizeUrl(testUrl);
+    const found = latestStatuses[normalized];
+    logger.info(`[getLatestStatuses] Test URL: ${testUrl}`, {
+      normalized: normalized,
+      found: !!found,
+      status: found ? found.status : null,
+      checked_at: found ? found.checked_at : null
+    });
+  });
+  logger.info(`[getLatestStatuses] =======================================`);
 
   return { websites, latestStatuses };
 }
@@ -498,15 +537,35 @@ app.get('/api/website-statuses', (req, res) => {
     logger.info(`[API /website-statuses] Websites to process: ${websites.length}`);
     logger.info(`[API /website-statuses] Status entries found: ${Object.keys(latestStatuses).length}`);
 
-    // Log all website URLs
-    logger.info(`[API /website-statuses] Website URLs:`, websites.map(w => w.url));
-    logger.info(`[API /website-statuses] Status entry URLs:`, Object.keys(latestStatuses));
+    // Log all website URLs (both original and normalized)
+    logger.info(`[API /website-statuses] Website URLs (original):`, websites.map(w => w.url));
+    logger.info(`[API /website-statuses] Website URLs (normalized):`, websites.map(w => normalizeUrl(w.url)));
+    logger.info(`[API /website-statuses] Status entry URLs (normalized keys):`, Object.keys(latestStatuses));
+
+    // Log detailed URL comparison
+    logger.info(`[API /website-statuses] ========== URL MATCHING DEBUG ==========`);
+    websites.forEach(w => {
+      const normalized = normalizeUrl(w.url);
+      const hasMatch = latestStatuses.hasOwnProperty(normalized);
+      logger.info(`[API /website-statuses] ${w.name}:`, {
+        originalUrl: w.url,
+        normalizedUrl: normalized,
+        hasMatch: hasMatch,
+        matchedStatus: hasMatch ? latestStatuses[normalized] : null
+      });
+    });
+    logger.info(`[API /website-statuses] =========================================`);
 
     const websiteStatuses = websites.map(website => {
-      const status = latestStatuses[website.url];
+      // Use normalized URL for lookup
+      const normalizedWebsiteUrl = normalizeUrl(website.url);
+      const status = latestStatuses[normalizedWebsiteUrl];
 
       if (!status) {
-        logger.debug(`[API /website-statuses] No status found for ${website.name} (${website.url})`);
+        logger.warn(`[API /website-statuses] No status found for ${website.name}`);
+        logger.warn(`[API /website-statuses]   Original URL: ${website.url}`);
+        logger.warn(`[API /website-statuses]   Normalized URL: ${normalizedWebsiteUrl}`);
+        logger.warn(`[API /website-statuses]   Available normalized keys:`, Object.keys(latestStatuses));
         return {
           name: website.name,
           url: website.url,
