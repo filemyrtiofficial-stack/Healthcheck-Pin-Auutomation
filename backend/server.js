@@ -489,6 +489,40 @@ function getLatestStatuses() {
   return { websites, latestStatuses };
 }
 
+// Test endpoint to verify URL matching
+app.get('/api/debug/url-matching', (req, res) => {
+  try {
+    const { websites, latestStatuses } = getLatestStatuses();
+
+    const testResults = websites.map(website => {
+      const normalizedUrl = normalizeUrl(website.url);
+      const status = latestStatuses[normalizedUrl];
+
+      return {
+        name: website.name,
+        originalUrl: website.url,
+        normalizedUrl: normalizedUrl,
+        found: !!status,
+        status: status ? status.status : null,
+        checked_at: status ? status.checked_at : null,
+        error: status ? status.error : null,
+        rawStatus: status
+      };
+    });
+
+    res.json({
+      success: true,
+      totalWebsites: websites.length,
+      totalStatuses: Object.keys(latestStatuses).length,
+      normalizedKeys: Object.keys(latestStatuses),
+      results: testResults
+    });
+  } catch (error) {
+    logger.error(`[DEBUG /url-matching] Error: ${error.message}`, error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // Debug endpoint to check status file directly
 app.get('/api/debug/status-file', (req, res) => {
   try {

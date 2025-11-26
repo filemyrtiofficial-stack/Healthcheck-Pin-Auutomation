@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import Button from '../components/Button'
-import { getWebsites, checkNow, getDownWebsites, deleteWebsite, getWebsiteStatuses } from '../api/api'
+import { getWebsites, checkNow, getDownWebsites, deleteWebsite, getWebsiteStatuses, testUrlMatching } from '../api/api'
 
 export default function Dashboard() {
   const [websites, setWebsites] = useState([])
@@ -83,6 +83,22 @@ export default function Dashboard() {
 
       console.log('[FRONTEND DEBUG] ========== API RESPONSE RECEIVED ==========')
       console.log('[FRONTEND DEBUG] Full API response:', JSON.stringify(data, null, 2))
+
+      // Check if we have websiteStatuses array
+      if (data?.websiteStatuses && Array.isArray(data.websiteStatuses)) {
+        console.log('[FRONTEND DEBUG] Checking first website status entry:')
+        if (data.websiteStatuses.length > 0) {
+          const first = data.websiteStatuses[0]
+          console.log('[FRONTEND DEBUG] First entry:', {
+            name: first.name,
+            url: first.url,
+            status: first.status,
+            checked_at: first.checked_at,
+            hasCheckedAt: !!first.checked_at,
+            checkedAtType: typeof first.checked_at
+          })
+        }
+      }
       console.log('[FRONTEND DEBUG] Response success:', data?.success)
       console.log('[FRONTEND DEBUG] Response has websiteStatuses:', !!data?.websiteStatuses)
       console.log('[FRONTEND DEBUG] websiteStatuses type:', typeof data?.websiteStatuses)
@@ -406,6 +422,22 @@ export default function Dashboard() {
               className="w-full sm:w-auto"
             >
               {showDebug ? '🔍 Hide Debug' : '🔍 Show Debug'}
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={async () => {
+                try {
+                  const result = await testUrlMatching()
+                  console.log('[FRONTEND] URL Matching Test Result:', result)
+                  alert(`URL Matching Test:\n\nTotal Websites: ${result.totalWebsites}\nTotal Statuses: ${result.totalStatuses}\n\nCheck console for details.`)
+                } catch (error) {
+                  console.error('[FRONTEND] URL Matching Test Error:', error)
+                  alert('Error testing URL matching. Check console.')
+                }
+              }}
+              className="w-full sm:w-auto"
+            >
+              🔗 Test URL Matching
             </Button>
           </div>
         </div>

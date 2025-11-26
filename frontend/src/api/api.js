@@ -123,6 +123,19 @@ export const getWebsiteStatuses = async () => {
   }
 }
 
+// Test URL matching endpoint
+export const testUrlMatching = async () => {
+  try {
+    console.log('[API DEBUG] Testing URL matching...')
+    const response = await api.get('/debug/url-matching')
+    console.log('[API DEBUG] URL matching test result:', response.data)
+    return response.data
+  } catch (error) {
+    console.error('Error testing URL matching:', error)
+    throw error
+  }
+}
+
 // Legacy endpoint for down websites (still using /api)
 export const getDownWebsites = async () => {
   try {
