@@ -9,6 +9,8 @@ export default function Dashboard() {
   const [websiteStatuses, setWebsiteStatuses] = useState({})
   const [loading, setLoading] = useState(false)
   const [checking, setChecking] = useState(false)
+  const [showDebug, setShowDebug] = useState(false)
+  const [lastApiResponse, setLastApiResponse] = useState(null)
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -23,6 +25,22 @@ export default function Dashboard() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [websites])
+
+  // Debug: Log when websiteStatuses state changes
+  useEffect(() => {
+    console.log('[FRONTEND DEBUG] ========== websiteStatuses STATE CHANGED ==========')
+    console.log('[FRONTEND DEBUG] Current websiteStatuses:', websiteStatuses)
+    console.log('[FRONTEND DEBUG] websiteStatuses keys:', Object.keys(websiteStatuses))
+    console.log('[FRONTEND DEBUG] websiteStatuses entries:')
+    Object.entries(websiteStatuses).forEach(([url, status]) => {
+      console.log(`[FRONTEND DEBUG]   ${url}:`, {
+        status: status?.status,
+        lastChecked: status?.lastChecked,
+        error: status?.error
+      })
+    })
+    console.log('[FRONTEND DEBUG] ==========================================')
+  }, [websiteStatuses])
 
   // Reload when navigating back from AddWebsite page
   useEffect(() => {
@@ -59,6 +77,10 @@ export default function Dashboard() {
 
       console.log('[FRONTEND DEBUG] Calling getWebsiteStatuses()...')
       const data = await getWebsiteStatuses()
+
+      // Store last API response for debugging
+      setLastApiResponse(data)
+
       console.log('[FRONTEND DEBUG] ========== API RESPONSE RECEIVED ==========')
       console.log('[FRONTEND DEBUG] Full API response:', JSON.stringify(data, null, 2))
       console.log('[FRONTEND DEBUG] Response success:', data?.success)
@@ -371,6 +393,20 @@ export default function Dashboard() {
             >
               ➕ Add Website
             </Button>
+            <Button
+              variant="secondary"
+              onClick={loadStatuses}
+              className="w-full sm:w-auto"
+            >
+              🔄 Refresh Status
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => setShowDebug(!showDebug)}
+              className="w-full sm:w-auto"
+            >
+              {showDebug ? '🔍 Hide Debug' : '🔍 Show Debug'}
+            </Button>
           </div>
         </div>
 
@@ -421,10 +457,12 @@ export default function Dashboard() {
                           <div className="text-sm text-gray-500">
                             {lastChecked ? new Date(lastChecked).toLocaleString() : 'Never'}
                           </div>
-                          {/* Debug info */}
+                          {/* Enhanced Debug info */}
                           {process.env.NODE_ENV === 'development' && (
-                            <div className="text-xs text-gray-400 mt-1">
-                              Debug: {JSON.stringify({ status, lastChecked })}
+                            <div className="text-xs text-gray-400 mt-1 space-y-1">
+                              <div>Status: {status || 'undefined'}</div>
+                              <div>LastChecked: {lastChecked ? lastChecked : 'null/undefined'}</div>
+                              <div>Raw: {JSON.stringify(websiteStatuses[website.url])}</div>
                             </div>
                           )}
                         </td>
@@ -472,11 +510,13 @@ export default function Dashboard() {
                         <p className="text-sm text-gray-600">
                           {lastChecked ? new Date(lastChecked).toLocaleString() : 'Never'}
                         </p>
-                        {/* Debug info */}
+                        {/* Enhanced Debug info */}
                         {process.env.NODE_ENV === 'development' && (
-                          <p className="text-xs text-gray-400 mt-1">
-                            Debug: status={status}, lastChecked={lastChecked ? 'exists' : 'null'}
-                          </p>
+                          <div className="text-xs text-gray-400 mt-1 space-y-1">
+                            <div>Status: {status || 'undefined'}</div>
+                            <div>LastChecked: {lastChecked ? lastChecked : 'null/undefined'}</div>
+                            <div>Raw: {JSON.stringify(websiteStatuses[website.url])}</div>
+                          </div>
                         )}
                       </div>
                     </div>
@@ -494,6 +534,60 @@ export default function Dashboard() {
           </>
         )}
       </div>
+
+      {/* Debug Panel */}
+      {showDebug && (
+        <div className="bg-white rounded-2xl shadow-2xl p-4 sm:p-6 lg:p-8 mt-8">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-xl font-bold text-gray-800">Debug Information</h3>
+            <Button
+              variant="secondary"
+              onClick={() => setShowDebug(false)}
+              className="text-sm"
+            >
+              Hide Debug
+            </Button>
+          </div>
+
+          <div className="space-y-4">
+            <div>
+              <h4 className="text-sm font-semibold text-gray-700 mb-2">Last API Response:</h4>
+              <pre className="bg-gray-100 p-4 rounded-lg text-xs overflow-auto max-h-96">
+                {lastApiResponse ? JSON.stringify(lastApiResponse, null, 2) : 'No API response yet'}
+              </pre>
+            </div>
+
+            <div>
+              <h4 className="text-sm font-semibold text-gray-700 mb-2">Current State:</h4>
+              <pre className="bg-gray-100 p-4 rounded-lg text-xs overflow-auto max-h-96">
+                {JSON.stringify({
+                  websitesCount: websites.length,
+                  websiteStatusesCount: Object.keys(websiteStatuses).length,
+                  websiteStatuses: websiteStatuses
+                }, null, 2)}
+              </pre>
+            </div>
+
+            <div>
+              <h4 className="text-sm font-semibold text-gray-700 mb-2">Status Mapping:</h4>
+              <div className="bg-gray-100 p-4 rounded-lg text-xs space-y-2">
+                {websites.map((website, idx) => {
+                  const status = websiteStatuses[website.url]
+                  return (
+                    <div key={idx} className="border-b border-gray-300 pb-2">
+                      <div className="font-semibold">{website.name}</div>
+                      <div>URL: {website.url}</div>
+                      <div>Status: {status?.status || 'UNKNOWN'}</div>
+                      <div>LastChecked: {status?.lastChecked || 'null'}</div>
+                      <div>Error: {status?.error || 'null'}</div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

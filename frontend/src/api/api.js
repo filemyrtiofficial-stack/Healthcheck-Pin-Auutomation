@@ -74,10 +74,51 @@ export const checkNow = async () => {
 // Get all website statuses
 export const getWebsiteStatuses = async () => {
   try {
+    console.log('[API DEBUG] ========== getWebsiteStatuses() called ==========')
+    console.log('[API DEBUG] Making request to /api/website-statuses')
+    console.log('[API DEBUG] API base URL:', api.defaults.baseURL)
+
     const response = await api.get('/website-statuses')
+
+    console.log('[API DEBUG] ========== RESPONSE RECEIVED ==========')
+    console.log('[API DEBUG] Response status:', response.status)
+    console.log('[API DEBUG] Response headers:', response.headers)
+    console.log('[API DEBUG] Response data type:', typeof response.data)
+    console.log('[API DEBUG] Response data keys:', Object.keys(response.data || {}))
+    console.log('[API DEBUG] Response success:', response.data?.success)
+    console.log('[API DEBUG] Response has websiteStatuses:', !!response.data?.websiteStatuses)
+    console.log('[API DEBUG] websiteStatuses is array:', Array.isArray(response.data?.websiteStatuses))
+
+    if (response.data?.websiteStatuses) {
+      console.log('[API DEBUG] websiteStatuses length:', response.data.websiteStatuses.length)
+      console.log('[API DEBUG] First 3 statuses:')
+      response.data.websiteStatuses.slice(0, 3).forEach((ws, idx) => {
+        console.log(`[API DEBUG]   [${idx + 1}] ${ws.name} (${ws.url}):`, {
+          status: ws.status,
+          statusType: typeof ws.status,
+          checked_at: ws.checked_at,
+          checked_atType: typeof ws.checked_at,
+          statusCode: ws.statusCode,
+          error: ws.error
+        })
+      })
+    }
+
+    console.log('[API DEBUG] Full response data:', JSON.stringify(response.data, null, 2))
+    console.log('[API DEBUG] ========== Returning response.data ==========')
+
     return response.data
   } catch (error) {
-    console.error('Error fetching website statuses:', error)
+    console.error('[API DEBUG] ========== ERROR in getWebsiteStatuses() ==========')
+    console.error('[API DEBUG] Error type:', error.constructor.name)
+    console.error('[API DEBUG] Error message:', error.message)
+    console.error('[API DEBUG] Error response:', error.response)
+    if (error.response) {
+      console.error('[API DEBUG] Response status:', error.response.status)
+      console.error('[API DEBUG] Response data:', error.response.data)
+      console.error('[API DEBUG] Response headers:', error.response.headers)
+    }
+    console.error('[API DEBUG] Error stack:', error.stack)
     throw error
   }
 }

@@ -389,7 +389,8 @@ function getLatestStatuses() {
         url: status.url,
         status: status.status,
         error: status.error,
-        checked_at: status.checked_at
+        checked_at: status.checked_at,
+        checked_atType: typeof status.checked_at
       });
 
       // Include status even if checked_at is missing (for backward compatibility)
@@ -397,13 +398,33 @@ function getLatestStatuses() {
       const statusCheckedAt = status.checked_at || new Date().toISOString(); // Default to now if missing
       const existingCheckedAt = existingStatus?.checked_at || new Date(0).toISOString();
 
-      if (!existingStatus || new Date(statusCheckedAt) > new Date(existingCheckedAt)) {
-        // Ensure checked_at exists
+      // Validate checked_at date
+      const statusDate = new Date(statusCheckedAt);
+      const existingDate = new Date(existingCheckedAt);
+      const isStatusValid = !isNaN(statusDate.getTime());
+      const isExistingValid = !isNaN(existingDate.getTime());
+
+      logger.debug(`[getLatestStatuses] Date comparison for ${status.url}:`, {
+        statusCheckedAt,
+        existingCheckedAt,
+        statusDateValid: isStatusValid,
+        existingDateValid: isExistingValid,
+        statusDate: isStatusValid ? statusDate.toISOString() : 'INVALID',
+        existingDate: isExistingValid ? existingDate.toISOString() : 'INVALID',
+        isNewer: isStatusValid && isExistingValid ? statusDate > existingDate : !existingStatus
+      });
+
+      if (!existingStatus || (isStatusValid && isExistingValid && statusDate > existingDate)) {
+        // Ensure checked_at exists and is valid
+        const finalCheckedAt = status.checked_at && !isNaN(new Date(status.checked_at).getTime())
+          ? status.checked_at
+          : statusCheckedAt;
+
         latestStatuses[status.url] = {
           ...status,
-          checked_at: status.checked_at || statusCheckedAt
+          checked_at: finalCheckedAt
         };
-        logger.debug(`[getLatestStatuses] Added/updated status for ${status.url}`);
+        logger.info(`[getLatestStatuses] Added/updated status for ${status.url} with checked_at: ${finalCheckedAt}`);
       } else {
         logger.debug(`[getLatestStatuses] Skipped older status for ${status.url}`);
       }
@@ -552,6 +573,17 @@ app.get('/api/website-statuses', (req, res) => {
       };
 
       logger.info(`[API /website-statuses] ${website.name}: status=${websiteStatus}, checked_at=${result.checked_at}`);
+      logger.info(`[API /website-statuses] ${website.name} - Full result object:`, JSON.stringify(result, null, 2));
+
+      // Additional debug: Check if checked_at is valid
+      if (result.checked_at) {
+        const checkedDate = new Date(result.checked_at);
+        logger.info(`[API /website-statuses] ${website.name} - checked_at is valid date: ${!isNaN(checkedDate.getTime())}, parsed: ${checkedDate.toISOString()}`);
+      } else {
+        logger.warn(`[API /website-statuses] ${website.name} - checked_at is NULL or MISSING!`);
+        logger.warn(`[API /website-statuses] ${website.name} - Raw status object:`, JSON.stringify(status, null, 2));
+      }
+
       return result;
     });
 
@@ -570,6 +602,22 @@ app.get('/api/website-statuses', (req, res) => {
         checked_at: response.websiteStatuses[0].checked_at
       } : null
     });
+
+    // Detailed logging for each website in response
+    logger.info(`[API /website-statuses] ========== DETAILED RESPONSE BREAKDOWN ==========`);
+    response.websiteStatuses.forEach((ws, idx) => {
+      logger.info(`[API /website-statuses] [${idx + 1}] ${ws.name}:`, {
+        url: ws.url,
+        status: ws.status,
+        statusType: typeof ws.status,
+        checked_at: ws.checked_at,
+        checked_atType: typeof ws.checked_at,
+        checked_atValid: ws.checked_at ? !isNaN(new Date(ws.checked_at).getTime()) : false,
+        statusCode: ws.statusCode,
+        error: ws.error
+      });
+    });
+    logger.info(`[API /website-statuses] ================================================`);
 
     // Explicitly ensure JSON response
     res.setHeader('Content-Type', 'application/json');
