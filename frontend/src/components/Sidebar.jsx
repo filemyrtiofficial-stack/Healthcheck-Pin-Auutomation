@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 
-export default function Sidebar({ isOpen, onClose, onLogout }) {
+export default function Sidebar({ isOpen, onClose, onLogout, onRunNow, checking }) {
   const location = useLocation()
 
   const isActive = (path) => location.pathname === path
@@ -9,6 +9,15 @@ export default function Sidebar({ isOpen, onClose, onLogout }) {
     { path: '/', label: 'Dashboard', icon: '📊' },
     { path: '/add', label: 'Add Website', icon: '➕' },
     { path: '/down', label: 'Down Websites', icon: '⚠️' },
+  ]
+
+  const actionButtons = [
+    {
+      label: checking ? '⏳ Checking...' : '▶️ Run Now',
+      action: onRunNow,
+      disabled: checking,
+      variant: 'success'
+    }
   ]
 
   return (
@@ -58,6 +67,31 @@ export default function Sidebar({ isOpen, onClose, onLogout }) {
                 <span>{item.label}</span>
               </Link>
             ))}
+
+            {/* Action Buttons */}
+            <div className="pt-4 space-y-2">
+              {actionButtons.map((button, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    button.action()
+                    onClose()
+                  }}
+                  disabled={button.disabled}
+                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-all duration-200 ${button.variant === 'success'
+                      ? button.disabled
+                        ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                        : 'bg-green-600 text-white hover:bg-green-700 shadow-md'
+                      : 'bg-blue-600 text-white hover:bg-blue-700 shadow-md'
+                    }`}
+                >
+                  <span className="text-lg">
+                    {button.disabled ? '⏳' : '▶️'}
+                  </span>
+                  <span>{button.disabled ? 'Checking...' : 'Run Now'}</span>
+                </button>
+              ))}
+            </div>
           </nav>
 
           {/* Logout Button */}

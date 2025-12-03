@@ -10,6 +10,7 @@ import Login from './pages/Login'
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [checking, setChecking] = useState(false)
 
   useEffect(() => {
     // Check if user is already authenticated
@@ -34,6 +35,12 @@ function App() {
     localStorage.removeItem('authenticated')
   }
 
+  const handleRunNow = async () => {
+    if (window.handleRunNowGlobal) {
+      await window.handleRunNowGlobal()
+    }
+  }
+
   if (!isAuthenticated) {
     return <Login onLogin={handleLogin} />
   }
@@ -41,7 +48,13 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen bg-gradient-to-br from-purple-500 via-purple-600 to-indigo-700">
-        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} onLogout={handleLogout} />
+        <Sidebar
+          isOpen={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+          onLogout={handleLogout}
+          onRunNow={handleRunNow}
+          checking={checking}
+        />
 
         {/* Hamburger menu button for mobile */}
         <button

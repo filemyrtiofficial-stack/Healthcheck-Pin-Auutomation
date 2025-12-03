@@ -12,6 +12,9 @@ export default function Dashboard() {
   const navigate = useNavigate()
   const location = useLocation()
 
+  // Expose handleRunNow globally so App can access it
+  window.handleRunNowGlobal = handleRunNow
+
   // Reload when component mounts or when navigating back from other pages
   useEffect(() => {
     loadWebsites()
@@ -415,35 +418,9 @@ export default function Dashboard() {
   return (
     <div>
       <div className="bg-white rounded-2xl shadow-2xl p-4 sm:p-6 lg:p-8 mb-8">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6 gap-4">
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Dashboard</h2>
-            <p className="text-gray-600 text-sm sm:text-base">Monitor all your RTI portal websites</p>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full sm:w-auto">
-            <Button
-              variant="success"
-              onClick={handleRunNow}
-              disabled={checking}
-              className="w-full sm:w-auto"
-            >
-              {checking ? '⏳ Checking...' : '▶️ Run Now'}
-            </Button>
-            <Button
-              variant="primary"
-              onClick={() => navigate('/add')}
-              className="w-full sm:w-auto"
-            >
-              ➕ Add Website
-            </Button>
-            <Button
-              variant="secondary"
-              onClick={loadStatuses}
-              className="w-full sm:w-auto"
-            >
-              🔄 Refresh Status
-            </Button>
-          </div>
+        <div className="mb-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Dashboard</h2>
+          <p className="text-gray-600 text-sm sm:text-base">Monitor all your RTI portal websites</p>
         </div>
 
         {websites.length === 0 ? (
