@@ -5,8 +5,8 @@ require('dotenv').config();
 
 const { checkWebsites } = require('./src/checker/websiteChecker');
 const whatsappService = require('./src/whatsapp/whatsappService');
-const { generateSocialMediaPost, generateConsolidatedWhatsAppMessage, generateIndividualWhatsAppMessage } = require('./src/postGenerator/postGenerator');
-const { saveStatus, getLastPostTime, savePostLog } = require('./src/utils/database');
+const { generateIndividualWhatsAppMessage } = require('./src/postGenerator/postGenerator');
+const { saveStatus } = require('./src/utils/database');
 const { logger } = require('./src/utils/logger');
 const { validateEnvironment } = require('./src/utils/envValidator');
 const { setupSecurityMiddleware, setupCORS } = require('./src/middleware/security');
@@ -995,22 +995,22 @@ const frontendSrc = path.join(__dirname, '../frontend');
 // This middleware must come AFTER all API routes
 app.use((req, res, next) => {
   // CRITICAL: Skip ALL API routes - never serve static files for these
-  const path = req.path.toLowerCase();
-  if (path.startsWith('/api/') || path.startsWith('/website/') || path.startsWith('/health')) {
+  const requestPath = req.path.toLowerCase();
+  if (requestPath.startsWith('/api/') || requestPath.startsWith('/website/') || requestPath.startsWith('/health')) {
     logger.debug(`[Static Middleware] Skipping static file serving for API route: ${req.path}`);
     return next();
   }
 
   // Only serve actual static asset files (with extensions)
   // Don't serve anything else - let the catch-all route handle it
-  if (path.match(/\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot|map)$/)) {
+  if (requestPath.match(/\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot|map)$/)) {
     logger.debug(`[Static Middleware] Serving static file: ${req.path}`);
     if (fs.existsSync(frontendDist)) {
       return express.static(frontendDist, {
-        setHeaders: (res, path) => {
+        setHeaders: (res, filePath) => {
           // Ensure correct content types
-          if (path.endsWith('.js')) res.setHeader('Content-Type', 'application/javascript');
-          if (path.endsWith('.css')) res.setHeader('Content-Type', 'text/css');
+          if (filePath.endsWith('.js')) res.setHeader('Content-Type', 'application/javascript');
+          if (filePath.endsWith('.css')) res.setHeader('Content-Type', 'text/css');
         }
       })(req, res, next);
     } else {
@@ -1107,4 +1107,3 @@ process.on('unhandledRejection', (reason, promise) => {
   logger.error(`Unhandled rejection at: ${promise}, reason: ${reason}`);
   gracefulShutdown('unhandledRejection');
 });
-

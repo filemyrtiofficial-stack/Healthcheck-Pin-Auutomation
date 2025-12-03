@@ -5,7 +5,6 @@ const { checkWebsites } = require('./checker/websiteChecker');
 const { generatePost } = require('./postGenerator/postGenerator');
 const { postToSocialMedia } = require('./browserAutomation/socialMediaPoster');
 const whatsappService = require('./whatsapp/whatsappService');
-const { formatMessage: formatWhatsAppMessage } = require('./whatsapp/messageTemplates');
 const { saveStatus, getLastPostTime, savePostLog } = require('./utils/database');
 const { logger, setSuppressConsole } = require('./utils/logger');
 
@@ -202,6 +201,5 @@ if (require.main === module) {
 }
 
 module.exports = { main };
-
 
 
