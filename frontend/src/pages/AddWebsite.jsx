@@ -24,19 +24,60 @@ export default function AddWebsite() {
       }
 
       const websites = []
-      for (const line of lines) {
-        const parts = line.split(',').map(part => part.trim())
-        if (parts.length === 2) {
-          websites.push({ name: parts[0], url: parts[1] })
+      console.log(`[BULK PARSE] Processing ${lines.length} lines`)
+
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i]
+        const trimmedLine = line.trim()
+        if (!trimmedLine) continue
+
+        console.log(`[BULK PARSE] Line ${i + 1}: "${trimmedLine}"`)
+
+        const parts = trimmedLine.split(',').map(part => part.trim())
+        if (parts.length === 2 && parts[1]) {
+          // Format: Name,URL
+          const url = parts[1].startsWith('http') ? parts[1] : `https://${parts[1]}`
+          console.log(`[BULK PARSE] Parsed as Name,URL: "${parts[0]}" -> "${url}"`)
+          websites.push({ name: parts[0], url: url })
         } else {
-          // Try to extract URL and create name from domain
-          const urlMatch = line.match(/https?:\/\/([^\/]+)/)
-          if (urlMatch) {
-            const domain = urlMatch[1].replace(/^www\./, '')
-            websites.push({ name: domain, url: line.trim() })
+          // Try to find URL in the line - look for http/https URLs first
+          const urlMatch = trimmedLine.match(/(https?:\/\/[^\s]+)/)
+          console.log(`[BULK PARSE] URL match result:`, urlMatch)
+          if (urlMatch && urlMatch[1]) {
+            const url = urlMatch[1] // Use the full matched URL
+            console.log(`[BULK PARSE] Using matched URL: "${url}"`)
+            // Extract domain name from URL for the name
+            const domainMatch = url.match(/https?:\/\/([^\/]+)/)
+            const domain = domainMatch ? domainMatch[1].replace(/^www\./, '') : 'Unknown'
+            console.log(`[BULK PARSE] Extracted domain: "${domain}"`)
+            websites.push({ name: domain, url: url })
+          } else {
+            // Try to extract domain-like text and construct URL
+            // Handle cases like "rtionline.gov.in (Central Govt https://rtionline.gov.in/)"
+            const domainMatch = trimmedLine.match(/([a-zA-Z0-9-]+\.[a-zA-Z]{2,}(?:\.[a-zA-Z]{2,})?)/)
+            if (domainMatch) {
+              const domain = domainMatch[1]
+              const url = `https://${domain}`
+              console.log(`[BULK PARSE] Constructed URL from domain: "${url}"`)
+              websites.push({ name: domain, url: url })
+            } else {
+              console.log(`[BULK PARSE] No valid URL or domain found in line: "${trimmedLine}"`)
+            }
           }
         }
       }
+
+      console.log(`[BULK PARSE] Final websites array:`, websites)
+
+      // Final validation - ensure all URLs have proper protocol
+      const validatedWebsites = websites.map(website => ({
+        name: website.name,
+        url: website.url.startsWith('http') ? website.url : `https://${website.url}`
+      }))
+
+      console.log(`[BULK PARSE] Validated websites:`, validatedWebsites)
+      websites.length = 0 // Clear array
+      websites.push(...validatedWebsites) // Replace with validated
 
       if (websites.length === 0) {
         toast.error('No valid websites found. Please use format: Name,URL or just URLs')
@@ -141,8 +182,8 @@ export default function AddWebsite() {
               type="button"
               onClick={() => setBulkMode(false)}
               className={`px-4 py-2 rounded-md font-medium transition-colors ${!bulkMode
-                  ? 'bg-white text-purple-700 shadow-sm'
-                  : 'text-gray-600 hover:text-gray-800'
+                ? 'bg-white text-purple-700 shadow-sm'
+                : 'text-gray-600 hover:text-gray-800'
                 }`}
             >
               Single Website
@@ -151,8 +192,8 @@ export default function AddWebsite() {
               type="button"
               onClick={() => setBulkMode(true)}
               className={`px-4 py-2 rounded-md font-medium transition-colors ${bulkMode
-                  ? 'bg-white text-purple-700 shadow-sm'
-                  : 'text-gray-600 hover:text-gray-800'
+                ? 'bg-white text-purple-700 shadow-sm'
+                : 'text-gray-600 hover:text-gray-800'
                 }`}
             >
               Bulk Add
