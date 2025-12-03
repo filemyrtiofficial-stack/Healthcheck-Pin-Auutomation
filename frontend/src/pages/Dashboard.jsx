@@ -12,9 +12,6 @@ export default function Dashboard() {
   const navigate = useNavigate()
   const location = useLocation()
 
-  // Expose handleRunNow globally so App can access it
-  window.handleRunNowGlobal = handleRunNow
-
   // Reload when component mounts or when navigating back from other pages
   useEffect(() => {
     loadWebsites()
@@ -418,9 +415,23 @@ export default function Dashboard() {
   return (
     <div>
       <div className="bg-white rounded-2xl shadow-2xl p-4 sm:p-6 lg:p-8 mb-8">
-        <div className="mb-6">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Dashboard</h2>
-          <p className="text-gray-600 text-sm sm:text-base">Monitor all your RTI portal websites</p>
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6 gap-4">
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Dashboard</h2>
+            <p className="text-gray-600 text-sm sm:text-base">Monitor all your RTI portal websites</p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full sm:w-auto">
+            <button
+              onClick={handleRunNow}
+              disabled={checking}
+              className={`px-6 py-3 rounded-lg font-semibold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${checking
+                  ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                  : 'bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:from-green-600 hover:to-emerald-600 shadow-lg hover:shadow-xl'
+                }`}
+            >
+              {checking ? '⏳ Checking...' : '▶️ Run Now'}
+            </button>
+          </div>
         </div>
 
         {websites.length === 0 ? (

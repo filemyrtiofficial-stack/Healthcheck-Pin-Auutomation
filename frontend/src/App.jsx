@@ -10,7 +10,6 @@ import Login from './pages/Login'
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [checking, setChecking] = useState(false)
 
   useEffect(() => {
     // Check if user is already authenticated
@@ -35,12 +34,6 @@ function App() {
     localStorage.removeItem('authenticated')
   }
 
-  const handleRunNow = async () => {
-    if (window.handleRunNowGlobal) {
-      await window.handleRunNowGlobal()
-    }
-  }
-
   if (!isAuthenticated) {
     return <Login onLogin={handleLogin} />
   }
@@ -52,8 +45,6 @@ function App() {
           isOpen={sidebarOpen}
           onClose={() => setSidebarOpen(false)}
           onLogout={handleLogout}
-          onRunNow={handleRunNow}
-          checking={checking}
         />
 
         {/* Hamburger menu button for mobile */}
