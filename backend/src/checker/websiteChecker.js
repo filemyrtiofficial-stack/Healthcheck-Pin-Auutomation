@@ -160,7 +160,7 @@ function canUserApplyRTI(html, statusCode) {
     }
   }
 
-  // Check for RTI application functionality - CRITICAL REQUIREMENTS
+  // Check for RTI application functionality - more lenient approach
   const rtiApplicationKeywords = [
     'rti',
     'right to information',
@@ -171,7 +171,10 @@ function canUserApplyRTI(html, statusCode) {
     'new application',
     'rti application',
     'online application',
-    'application form'
+    'application form',
+    'information commission',
+    'public authority',
+    'citizen charter'
   ];
 
   let rtiKeywordCount = 0;
@@ -181,12 +184,12 @@ function canUserApplyRTI(html, statusCode) {
     }
   }
 
-  // Must have RTI-related content
+  // Must have some RTI-related content to be considered an RTI portal
   if (rtiKeywordCount === 0) {
     return false; // No RTI content found
   }
 
-  // Check for form elements - REQUIRED for application submission
+  // Check for form elements - OPTIONAL but good indicators
   const hasForm = /<form[^>]*>/i.test(html);
   const hasInput = /<input[^>]*>/i.test(html);
   const hasTextarea = /<textarea[^>]*>/i.test(html);
@@ -205,47 +208,36 @@ function canUserApplyRTI(html, statusCode) {
   // If status is 4xx or 5xx, likely can't apply
   if (statusCode >= 400) {
     // Only consider working if it has login page (user can at least try to login)
-    if (hasLogin && rtiKeywordCount >= 2) {
+    if (hasLogin && rtiKeywordCount >= 1) {
       return true; // Login page exists - user can attempt to access
     }
     return false; // Error status without login option
   }
 
-  // For 2xx/3xx status codes - check if application functionality exists
+  // For 2xx/3xx status codes - be much more lenient with RTI portals
   if (statusCode >= 200 && statusCode < 400) {
-    // Must have either:
-    // 1. Application form (can submit directly)
-    // 2. Login page (can login to access application)
-    // 3. Application-related content with input fields
+    // Government RTI portals should be considered working if they:
+    // 1. Have RTI-related content
+    // 2. Load successfully (HTTP 2xx/3xx)
+    // 3. Don't have clear error indicators
 
-    if (hasForm && hasInput && hasSubmitButton) {
-      return true; // Has complete application form
+    // Very lenient: if it has RTI content and loads, consider it working
+    if (rtiKeywordCount >= 1) {
+      return true; // Has RTI content - consider it a working RTI portal
     }
 
-    if (hasForm && hasInput && rtiKeywordCount >= 3) {
-      return true; // Has form with RTI content
+    // Even more lenient: if it has substantial content and no blocking errors were found above,
+    // and it's a government domain (.gov.in), consider it working
+    if (html.length > 1000 && /gov\.in/i.test(html)) {
+      return true; // Government domain with content
     }
 
-    if (hasLogin && rtiKeywordCount >= 2) {
-      return true; // Has login page for RTI portal
-    }
-
-    if (hasInput && hasTextarea && rtiKeywordCount >= 2) {
-      return true; // Has input fields for application
-    }
-
-    // If has RTI keywords but no form, might be informational page
-    // Check if it links to application or has application button
-    const hasApplicationLink = /<a[^>]*>[\s\S]*?(apply|application|submit|file)[\s\S]*?<\/a>/i.test(html);
-    if (hasApplicationLink && rtiKeywordCount >= 2) {
-      return true; // Has link to application
-    }
-
-    return false; // Has RTI content but no way to apply
+    // Fallback: any page that loads without blocking errors and has some content
+    return html.length > 500; // Basic content check
   }
 
-  // Default: if we got HTML with RTI content, might be working
-  return rtiKeywordCount >= 2 && html.length > 500;
+  // Default: if we got HTML with RTI content, likely working
+  return rtiKeywordCount >= 1 && html.length > 500;
 }
 
 async function checkWebsite(website, retries = MAX_RETRIES) {
