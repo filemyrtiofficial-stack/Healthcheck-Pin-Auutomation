@@ -303,71 +303,6 @@ export default function Dashboard() {
     }
   }
 
-  const handleRunNow = async () => {
-    try {
-      setChecking(true)
-      toast.loading('Starting website check... This will run in the background.', { id: 'checking' })
-
-      const data = await checkNow()
-
-      if (data.success) {
-        toast.success(
-          `Check started! Checking ${data.websitesCount || 0} websites in the background. Results will appear shortly.`,
-          { id: 'checking', duration: 5000 }
-        )
-
-        // Wait a bit then reload statuses to get updated data
-        setTimeout(async () => {
-          await loadStatuses()
-          // Keep checking every 5 seconds until we have results
-          let attempts = 0
-          const maxAttempts = 20 // Check for up to 100 seconds (20 * 5s = 100s)
-
-          const checkInterval = setInterval(async () => {
-            attempts++
-            console.log(`[Frontend] Checking for results (attempt ${attempts}/${maxAttempts})...`)
-            await loadStatuses()
-
-            // Get fresh statuses from state (need to check after loadStatuses updates state)
-            // We'll check in the next interval after state updates
-            if (attempts >= maxAttempts) {
-              clearInterval(checkInterval)
-              setChecking(false)
-              toast.success('Website check should be complete. Refreshing statuses...', { id: 'checking' })
-              // Final reload
-              await loadStatuses()
-            }
-          }, 5000)
-
-          // Also set a timeout to stop checking after max time
-          setTimeout(() => {
-            clearInterval(checkInterval)
-            setChecking(false)
-            loadStatuses() // Final reload
-          }, maxAttempts * 5000)
-        }, 5000) // Wait 5 seconds before first check
-      } else {
-        toast.error(`Error: ${data.error}`, { id: 'checking' })
-        setChecking(false)
-      }
-    } catch (error) {
-      // Handle errors
-      let errorMessage = 'Failed to start website check';
-
-      if (error.code === 'ECONNABORTED' || error.message?.includes('timeout') || error.response?.status === 504) {
-        errorMessage = 'Request timed out, but the check may have started. Please refresh the page in a moment.';
-        // Still try to reload statuses
-        setTimeout(() => {
-          loadStatuses()
-        }, 5000)
-      } else {
-        errorMessage = error.response?.data?.error || error.message || 'Failed to start website check';
-      }
-
-      toast.error(errorMessage, { id: 'checking', duration: 10000 })
-      setChecking(false)
-    }
-  }
 
   const handleDelete = async (index) => {
     if (!window.confirm('Are you sure you want to delete this website?')) {
@@ -415,23 +350,9 @@ export default function Dashboard() {
   return (
     <div>
       <div className="bg-white rounded-2xl shadow-2xl p-4 sm:p-6 lg:p-8 mb-8">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6 gap-4">
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Dashboard</h2>
-            <p className="text-gray-600 text-sm sm:text-base">Monitor all your RTI portal websites</p>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full sm:w-auto">
-            <button
-              onClick={handleRunNow}
-              disabled={checking}
-              className={`px-6 py-3 rounded-lg font-semibold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${checking
-                  ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
-                  : 'bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:from-green-600 hover:to-emerald-600 shadow-lg hover:shadow-xl'
-                }`}
-            >
-              {checking ? '⏳ Checking...' : '▶️ Run Now'}
-            </button>
-          </div>
+        <div className="mb-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Dashboard</h2>
+          <p className="text-gray-600 text-sm sm:text-base">Monitor all your RTI portal websites</p>
         </div>
 
         {websites.length === 0 ? (

@@ -6,10 +6,13 @@ import Dashboard from './pages/Dashboard'
 import AddWebsite from './pages/AddWebsite'
 import DownWebsites from './pages/DownWebsites'
 import Login from './pages/Login'
+import { checkNow } from './api/api'
+import toast from 'react-hot-toast'
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [checking, setChecking] = useState(false)
 
   useEffect(() => {
     // Check if user is already authenticated
@@ -34,6 +37,42 @@ function App() {
     localStorage.removeItem('authenticated')
   }
 
+  const handleRunNow = async () => {
+    try {
+      setChecking(true)
+      toast.loading('Starting website check... This will run in the background.', { id: 'checking' })
+
+      const data = await checkNow()
+
+      if (data.success) {
+        toast.success(
+          `Check started! Checking ${data.websitesCount || 0} websites in the background. Results will appear shortly.`,
+          { id: 'checking', duration: 5000 }
+        )
+
+        // Wait a bit then reload statuses to get updated data
+        setTimeout(async () => {
+          // This will be handled by the Dashboard component's polling logic
+          // The sidebar doesn't need to manage this
+        }, 5000)
+      } else {
+        toast.error(`Error: ${data.error}`, { id: 'checking' })
+        setChecking(false)
+      }
+    } catch (error) {
+      let errorMessage = 'Failed to start website check';
+
+      if (error.code === 'ECONNABORTED' || error.message?.includes('timeout') || error.response?.status === 504) {
+        errorMessage = 'Request timed out, but the check may have started. Please refresh the page in a moment.';
+      } else {
+        errorMessage = error.response?.data?.error || error.message || 'Failed to start website check';
+      }
+
+      toast.error(errorMessage, { id: 'checking', duration: 10000 })
+      setChecking(false)
+    }
+  }
+
   if (!isAuthenticated) {
     return <Login onLogin={handleLogin} />
   }
@@ -45,6 +84,8 @@ function App() {
           isOpen={sidebarOpen}
           onClose={() => setSidebarOpen(false)}
           onLogout={handleLogout}
+          onRunNow={handleRunNow}
+          checking={checking}
         />
 
         {/* Hamburger menu button for mobile */}

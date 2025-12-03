@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 
-export default function Sidebar({ isOpen, onClose, onLogout }) {
+export default function Sidebar({ isOpen, onClose, onLogout, onRunNow, checking }) {
   const location = useLocation()
 
   const isActive = (path) => location.pathname === path
@@ -58,6 +58,26 @@ export default function Sidebar({ isOpen, onClose, onLogout }) {
                 <span>{item.label}</span>
               </Link>
             ))}
+
+            {/* Run Now Button */}
+            <div className="pt-4">
+              <button
+                onClick={() => {
+                  onRunNow()
+                  onClose()
+                }}
+                disabled={checking}
+                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-all duration-200 ${checking
+                    ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                    : 'bg-green-600 text-white hover:bg-green-700 shadow-md'
+                  }`}
+              >
+                <span className="text-lg">
+                  {checking ? '⏳' : '▶️'}
+                </span>
+                <span>{checking ? 'Checking...' : 'Run Now'}</span>
+              </button>
+            </div>
           </nav>
 
           {/* Logout Button */}
