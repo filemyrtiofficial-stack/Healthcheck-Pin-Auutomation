@@ -454,16 +454,18 @@ async function forceCloseBrowser() {
   }
 }
 
-// Handle process termination
-process.on('SIGINT', async () => {
-  await forceCloseBrowser();
-  process.exit(0);
-});
+// Handle process termination (only when run directly, not when imported as module)
+if (require.main === module) {
+  process.on('SIGINT', async () => {
+    await forceCloseBrowser();
+    process.exit(0);
+  });
 
-process.on('SIGTERM', async () => {
-  await forceCloseBrowser();
-  process.exit(0);
-});
+  process.on('SIGTERM', async () => {
+    await forceCloseBrowser();
+    process.exit(0);
+  });
+}
 
 module.exports = {
   sendWhatsAppAlert,

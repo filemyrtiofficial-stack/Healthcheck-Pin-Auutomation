@@ -19,6 +19,9 @@ if (!envValidation.valid && process.env.NODE_ENV === 'production') {
   process.exit(1);
 }
 
+// Increase max listeners to prevent MaxListenersExceededWarning
+process.setMaxListeners(20);
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
