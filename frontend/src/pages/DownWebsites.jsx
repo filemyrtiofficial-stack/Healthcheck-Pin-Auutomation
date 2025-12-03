@@ -118,9 +118,12 @@ export default function DownWebsites() {
                     <h3 className="text-xl sm:text-2xl font-bold mb-3 break-words">{website.name}</h3>
                     <div className="space-y-2 text-xs sm:text-sm">
                       <p className="break-all"><strong>URL:</strong> {website.url}</p>
-                      <p><strong>Status Code:</strong> {website.status || 'N/A'}</p>
+                      <p><strong>Status:</strong> {website.status ?? 'UNKNOWN'}</p>
                       <p><strong>Error:</strong> {website.error || 'Unknown error'}</p>
-                      <p><strong>Last Checked:</strong> {new Date(website.checked_at).toLocaleString()}</p>
+                      <p>
+                        <strong>Last Checked:</strong>{' '}
+                        {website.checked_at ? new Date(website.checked_at).toLocaleString() : 'Not checked yet'}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -132,4 +135,3 @@ export default function DownWebsites() {
     </div>
   )
 }
-

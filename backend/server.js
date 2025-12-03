@@ -913,40 +913,27 @@ app.post('/api/check-now', async (req, res) => {
 // Get down websites
 app.get('/api/down-websites', (req, res) => {
   try {
-    const statusFile = path.join(__dirname, 'logs/website_status.json');
-    let statuses = [];
+    const { websites, latestStatuses } = getLatestStatuses();
 
-    if (fs.existsSync(statusFile)) {
-      const data = fs.readFileSync(statusFile, 'utf8');
-      statuses = JSON.parse(data);
-    }
-
-    // Get latest status for each website
-    const websites = loadWebsites();
-    const latestStatuses = {};
-
-    statuses.forEach(status => {
-      if (!latestStatuses[status.url] || new Date(status.checked_at) > new Date(latestStatuses[status.url].checked_at)) {
-        latestStatuses[status.url] = status;
-      }
-    });
-
-    // Filter down websites
+    // Down OR unknown (no recent data) should be surfaced so UI doesn't claim "all clear"
     const downWebsites = websites
       .map(website => {
-        const status = latestStatuses[website.url];
+        const normalizedUrl = normalizeUrl(website.url);
+        const status = latestStatuses[normalizedUrl];
+
+        // No status found at all -> mark as unknown/down
         if (!status) {
-          // No status check yet - not considered down
-          return null;
+          return {
+            name: website.name,
+            url: website.url,
+            status: 'UNKNOWN',
+            error: 'Not checked yet',
+            checked_at: null
+          };
         }
 
-        // Determine if website is DOWN
-        // DOWN if: 
-        // 1. Status code exists and is NOT 200-399 (i.e., < 200 or >= 400)
-        // 2. Status is null/undefined BUT there's an error (connection failed, timeout, etc.)
+        // Normalize status code
         let statusCode = status.status;
-
-        // Convert status to number if it's a string number
         if (statusCode !== null && statusCode !== undefined) {
           if (typeof statusCode === 'string' && statusCode.trim() !== '' && !isNaN(statusCode)) {
             statusCode = parseInt(statusCode.trim(), 10);
@@ -954,7 +941,6 @@ app.get('/api/down-websites', (req, res) => {
         }
 
         const hasValidStatus = statusCode !== null && statusCode !== undefined && typeof statusCode === 'number' && !isNaN(statusCode);
-
         const errorValue = status.error;
         let errorStr = '';
         if (errorValue !== null && errorValue !== undefined) {
@@ -965,13 +951,16 @@ app.get('/api/down-websites', (req, res) => {
         const isDown = (hasValidStatus && (statusCode < 200 || statusCode >= 400)) ||
           (!hasValidStatus && hasError);
 
-        if (isDown) {
+        // Treat unknown (no status and no error) as something the user should see
+        const isUnknown = !hasValidStatus && !hasError;
+
+        if (isDown || isUnknown) {
           return {
             name: website.name,
             url: website.url,
-            status: status.status,
-            error: status.error || 'Unknown error',
-            checked_at: status.checked_at
+            status: hasValidStatus ? statusCode : 'UNKNOWN',
+            error: hasError ? status.error : 'Not checked yet',
+            checked_at: status.checked_at || null
           };
         }
         return null;
