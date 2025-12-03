@@ -1,18 +1,47 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import Sidebar from './components/Sidebar'
 import Dashboard from './pages/Dashboard'
 import AddWebsite from './pages/AddWebsite'
 import DownWebsites from './pages/DownWebsites'
+import Login from './pages/Login'
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+  useEffect(() => {
+    // Check if user is already authenticated
+    const authStatus = localStorage.getItem('authenticated')
+    if (authStatus === 'true') {
+      setIsAuthenticated(true)
+    }
+  }, [])
+
+  const handleLogin = (username, password) => {
+    // Hardcoded credentials
+    if (username === 'syed123' && password === 'FileMyRTI@50cr') {
+      setIsAuthenticated(true)
+      localStorage.setItem('authenticated', 'true')
+      return true
+    }
+    return false
+  }
+
+  const handleLogout = () => {
+    setIsAuthenticated(false)
+    localStorage.removeItem('authenticated')
+  }
+
+  if (!isAuthenticated) {
+    return <Login onLogin={handleLogin} />
+  }
 
   return (
     <Router>
       <div className="min-h-screen bg-gradient-to-br from-purple-500 via-purple-600 to-indigo-700">
-        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} onLogout={handleLogout} />
 
         {/* Hamburger menu button for mobile */}
         <button
