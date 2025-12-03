@@ -11,18 +11,7 @@ const { generatePost } = require('../src/postGenerator/postGenerator');
 const { saveStatus } = require('../src/utils/database');
 const { logger } = require('../src/utils/logger');
 
-const WEBSITES = [
-  { url: 'https://rti.rajasthan.gov.in/', name: 'Rajasthan RTI' },
-  { url: 'https://rtionline.sikkim.gov.in/auth/login', name: 'Sikkim RTI' },
-  { url: 'https://rtionline.tripura.gov.in/', name: 'Tripura RTI' },
-  { url: 'https://rtionline.up.gov.in/', name: 'Uttar Pradesh RTI' },
-  { url: 'https://rtionline.uk.gov.in/', name: 'Uttarakhand RTI' },
-  { url: 'https://par.wb.gov.in/rtilogin.php', name: 'West Bengal RTI' },
-  { url: 'https://chandigarh.gov.in/submit-rti-application', name: 'Chandigarh RTI' },
-  { url: 'https://rtionline.delhi.gov.in/', name: 'Delhi RTI' },
-  { url: 'https://rtionline.jk.gov.in/', name: 'Jammu & Kashmir RTI' },
-  { url: 'https://rtionline.ladakh.gov.in/index.php', name: 'Ladakh RTI' }
-];
+const WEBSITES = require('../config/websites.json');
 
 async function test() {
   logger.info('Running comprehensive test check (10 RTI websites)...');
