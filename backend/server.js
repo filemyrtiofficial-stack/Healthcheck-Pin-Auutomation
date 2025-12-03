@@ -117,10 +117,12 @@ app.get('/api/test', (req, res) => {
 app.post('/website/add', (req, res) => {
   try {
     const { url, name } = req.body;
+    logger.info(`[POST /website/add] Adding website: ${name} (${url})`);
 
     // Validate input
     const nameValidation = validateWebsiteName(name);
     if (!nameValidation.valid) {
+      logger.warn(`[POST /website/add] Name validation failed: ${nameValidation.error}`);
       return res.status(400).json({
         success: false,
         error: nameValidation.error
@@ -129,6 +131,7 @@ app.post('/website/add', (req, res) => {
 
     const urlValidation = validateWebsiteUrl(url);
     if (!urlValidation.valid) {
+      logger.warn(`[POST /website/add] URL validation failed: ${urlValidation.error}`);
       return res.status(400).json({
         success: false,
         error: urlValidation.error
@@ -145,6 +148,7 @@ app.post('/website/add', (req, res) => {
     const nameExists = websites.some(w => w.name.toLowerCase() === trimmedName.toLowerCase());
 
     if (urlExists) {
+      logger.warn(`[POST /website/add] URL already exists: ${trimmedUrl}`);
       return res.status(400).json({
         success: false,
         error: `A website with URL "${trimmedUrl}" already exists`
@@ -152,6 +156,7 @@ app.post('/website/add', (req, res) => {
     }
 
     if (nameExists) {
+      logger.warn(`[POST /website/add] Name already exists: ${trimmedName}`);
       return res.status(400).json({
         success: false,
         error: `A website with name "${trimmedName}" already exists`
@@ -161,10 +166,10 @@ app.post('/website/add', (req, res) => {
     websites.push({ url: trimmedUrl, name: trimmedName });
     saveWebsites(websites);
 
+    logger.info(`[POST /website/add] SUCCESS: Website added: ${trimmedName} (${trimmedUrl})`);
     res.json({ success: true, message: 'Website added successfully', websites });
-    logger.info(`Website added: ${trimmedName} (${trimmedUrl})`);
   } catch (error) {
-    logger.error(`Error adding website: ${error.message}`, error);
+    logger.error(`[POST /website/add] ERROR: ${error.message}`, error);
     res.status(500).json({ success: false, error: 'Internal server error' });
   }
 });

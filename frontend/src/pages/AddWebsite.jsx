@@ -47,17 +47,23 @@ export default function AddWebsite() {
       try {
         let successCount = 0
         let errorCount = 0
+        console.log(`[BULK ADD] Starting bulk addition of ${websites.length} websites`)
 
-        for (const website of websites) {
+        for (let i = 0; i < websites.length; i++) {
+          const website = websites[i]
           try {
+            console.log(`[BULK ADD] Adding website ${i + 1}/${websites.length}: ${website.name} (${website.url})`)
             const data = await addWebsite(website.name, website.url)
             if (data.success) {
               successCount++
+              console.log(`[BULK ADD] ✓ Success: ${website.name}`)
             } else {
               errorCount++
+              console.log(`[BULK ADD] ✗ Failed: ${website.name} - ${data.error}`)
             }
           } catch (error) {
             errorCount++
+            console.log(`[BULK ADD] ✗ Error: ${website.name} - ${error.message}`)
           }
         }
 
@@ -134,22 +140,20 @@ export default function AddWebsite() {
             <button
               type="button"
               onClick={() => setBulkMode(false)}
-              className={`px-4 py-2 rounded-md font-medium transition-colors ${
-                !bulkMode
+              className={`px-4 py-2 rounded-md font-medium transition-colors ${!bulkMode
                   ? 'bg-white text-purple-700 shadow-sm'
                   : 'text-gray-600 hover:text-gray-800'
-              }`}
+                }`}
             >
               Single Website
             </button>
             <button
               type="button"
               onClick={() => setBulkMode(true)}
-              className={`px-4 py-2 rounded-md font-medium transition-colors ${
-                bulkMode
+              className={`px-4 py-2 rounded-md font-medium transition-colors ${bulkMode
                   ? 'bg-white text-purple-700 shadow-sm'
                   : 'text-gray-600 hover:text-gray-800'
-              }`}
+                }`}
             >
               Bulk Add
             </button>
