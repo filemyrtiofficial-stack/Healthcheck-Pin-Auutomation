@@ -11,3 +11,4 @@ checkWebsites(websites).then(results => {
     console.log(`${status}: ${r.website.name} - Status: ${r.status}, Error: ${r.error}`);
   });
 }).catch(console.error);
+
