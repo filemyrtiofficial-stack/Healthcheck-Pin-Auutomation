@@ -98,7 +98,7 @@ function canUserApplyRTI(html, statusCode) {
 
   const lowerHtml = html.toLowerCase();
 
-  // Critical errors that prevent application submission
+  // CRITICAL: Check for blocking errors that make the site unusable
   const blockingErrors = [
     '404',
     'not found',
@@ -129,7 +129,7 @@ function canUserApplyRTI(html, statusCode) {
     'server maintenance'
   ];
 
-  // Check title for blocking errors
+  // Check title and body content for blocking errors
   const titleMatch = html.match(/<title[^>]*>([^<]*)<\/title>/i);
   if (titleMatch) {
     const title = titleMatch[1].toLowerCase();
@@ -140,7 +140,7 @@ function canUserApplyRTI(html, statusCode) {
     }
   }
 
-  // Check body content for blocking errors
+  // Check visible body text for blocking errors
   const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
   if (bodyMatch) {
     const bodyText = bodyMatch[1]
@@ -149,95 +149,71 @@ function canUserApplyRTI(html, statusCode) {
       .replace(/<[^>]+>/g, ' ')
       .toLowerCase();
 
-    // Check for blocking errors in visible text
     for (const error of blockingErrors) {
       if (bodyText.includes(error)) {
-        const errorCount = (bodyText.match(new RegExp(error, 'g')) || []).length;
-        if (errorCount >= 1) {
-          return false; // Blocking error found
-        }
+        return false; // Blocking error found in visible content
       }
     }
   }
 
-  // Check for RTI application functionality - more lenient approach
-  const rtiApplicationKeywords = [
+  // PRIMARY CHECK: Must have RTI-related content
+  const rtiKeywords = [
     'rti',
     'right to information',
-    'application',
-    'apply',
-    'submit',
-    'file application',
-    'new application',
-    'rti application',
-    'online application',
-    'application form',
     'information commission',
-    'public authority',
-    'citizen charter'
+    'public authority'
   ];
 
-  let rtiKeywordCount = 0;
-  for (const keyword of rtiApplicationKeywords) {
-    if (lowerHtml.includes(keyword)) {
-      rtiKeywordCount++;
-    }
+  const hasRtiContent = rtiKeywords.some(keyword => lowerHtml.includes(keyword));
+  if (!hasRtiContent) {
+    return false; // Not an RTI portal
   }
 
-  // Must have some RTI-related content to be considered an RTI portal
-  if (rtiKeywordCount === 0) {
-    return false; // No RTI content found
-  }
-
-  // Check for form elements - OPTIONAL but good indicators
-  const hasForm = /<form[^>]*>/i.test(html);
-  const hasInput = /<input[^>]*>/i.test(html);
-  const hasTextarea = /<textarea[^>]*>/i.test(html);
-  const hasSelect = /<select[^>]*>/i.test(html);
-  const hasSubmitButton = /<button[^>]*type=["\']submit["\'][^>]*>/i.test(html) ||
-    /<input[^>]*type=["\']submit["\'][^>]*>/i.test(html) ||
-    /<button[^>]*>[\s\S]*?submit[\s\S]*?<\/button>/i.test(html);
-
-  // Check for login/authentication (some RTI sites require login first)
-  const hasLogin = lowerHtml.includes('login') ||
-    lowerHtml.includes('sign in') ||
-    lowerHtml.includes('user name') ||
-    lowerHtml.includes('password') ||
-    /<input[^>]*type=["\']password["\'][^>]*>/i.test(html);
-
-  // If status is 4xx or 5xx, likely can't apply
+  // STATUS CODE CHECKS
   if (statusCode >= 400) {
-    // Only consider working if it has login page (user can at least try to login)
-    if (hasLogin && rtiKeywordCount >= 1) {
-      return true; // Login page exists - user can attempt to access
-    }
-    return false; // Error status without login option
+    // 4xx/5xx errors - only consider working if it has login functionality
+    const hasLogin = lowerHtml.includes('login') ||
+      lowerHtml.includes('sign in') ||
+      /<input[^>]*type=["\']password["\'][^>]*>/i.test(html);
+
+    return hasLogin; // Login page might still be accessible
   }
 
-  // For 2xx/3xx status codes - be much more lenient with RTI portals
+  // SUCCESS STATUS (2xx/3xx)
   if (statusCode >= 200 && statusCode < 400) {
-    // Government RTI portals should be considered working if they:
-    // 1. Have RTI-related content
-    // 2. Load successfully (HTTP 2xx/3xx)
-    // 3. Don't have clear error indicators
+    // For government RTI portals, be lenient:
+    // If it loads successfully and has RTI content, consider it working
+    // Many government sites are informational/static but still provide RTI info
 
-    // Very lenient: if it has RTI content and loads, consider it working
-    if (rtiKeywordCount >= 1) {
-      return true; // Has RTI content - consider it a working RTI portal
+    // Additional positive indicators (optional)
+    const applicationKeywords = [
+      'application', 'apply', 'submit', 'file application',
+      'online application', 'application form', 'citizen charter'
+    ];
+
+    const hasApplicationFeatures = applicationKeywords.some(keyword => lowerHtml.includes(keyword));
+    const hasForms = /<form[^>]*>/i.test(html) || /<input[^>]*>/i.test(html);
+    const isGovernmentDomain = /gov\.in/i.test(html);
+
+    // Consider working if:
+    // 1. Has RTI content + loads successfully (basic requirement)
+    // 2. OR has government domain + substantial content
+    // 3. OR has application features + forms
+
+    if (hasApplicationFeatures && hasForms) {
+      return true; // Full application functionality
     }
 
-    // Even more lenient: if it has substantial content and no blocking errors were found above,
-    // and it's a government domain (.gov.in), consider it working
-    if (html.length > 1000 && /gov\.in/i.test(html)) {
-      return true; // Government domain with content
+    if (isGovernmentDomain && html.length > 1000) {
+      return true; // Government RTI portal with content
     }
 
-    // Fallback: any page that loads without blocking errors and has some content
-    return html.length > 500; // Basic content check
+    // Basic RTI portal - has RTI content and loads
+    return html.length > 500;
   }
 
-  // Default: if we got HTML with RTI content, likely working
-  return rtiKeywordCount >= 1 && html.length > 500;
+  // Unknown status - check for basic content
+  return html.length > 500 && hasRtiContent;
 }
 
 async function checkWebsite(website, retries = MAX_RETRIES) {
